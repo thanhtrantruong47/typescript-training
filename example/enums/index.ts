@@ -1,11 +1,11 @@
-enum Message {
+enum MESSAGE {
   EMAIL = "Email not format",
   PASSWORD = "Password not format",
 }
 
 const login = (user: { email: string; password: string }) => {
-  let ms = Message;
-  return user.email.length < 8 ? ms.EMAIL : "";
+  let MSG = MESSAGE;
+  return user.email.length < 8 ? MSG.EMAIL : "";
 };
 
 console.log(login({ email: "", password: "123123123123213" }));
@@ -21,4 +21,4 @@ enum X {
   H,
 }
 
-console.log(typeof(X))
+console.log(typeof X);

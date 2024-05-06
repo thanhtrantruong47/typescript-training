@@ -12,15 +12,14 @@ printMyValue("qeqweq");
 const data14: number[] = [1, 2, 4, 3, 3, 45, 4, 3, 3, 3, 3, 43, 342];
 
 const printDataArr = (x: number[] | number) => {
-    console.log('data array')
-    if (Array.isArray(x)) {
-        x.forEach((s) => {
-            console.log(s);
-          });
-    } else {
-        console.log('this is number' + x)
-    }
- 
+  console.log("data array");
+  if (Array.isArray(x)) {
+    x.forEach((s) => {
+      console.log(s);
+    });
+  } else {
+    console.log("this is number" + x);
+  }
 };
 
 printDataArr(data14);

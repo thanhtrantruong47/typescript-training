@@ -10,7 +10,7 @@ const handleRequest = async (url: string, method: "GET" | "POST") => {
       "Content-Type": "Application-json",
     },
   });
-  const data = await res.json()
+  const data = await res.json();
   console.log(data);
 };
 
