@@ -4,7 +4,7 @@ interface Point1 {
 }
 
 interface PointMax extends Point1 {
-  max: string;
+  max: number;
 }
 
 interface Point1 {
@@ -18,9 +18,9 @@ const printPoint1 = (pt: Point1) => {
 };
 
 const printPointMax1 = (pt: PointMax) => {
-  console.log(pt.max.toUpperCase());
+  console.log(pt.max);
 };
 
-printPoint1({ x: 123, y: 4545, title: "qweoqeoqwoeoqoe" });
+printPoint1({ x: 123, y: 4545, title: "thanh123123" });
 
-printPointMax1({ x: 5, y: 6, max: "asdasda", title: "asda" });
+printPointMax1({ x: 5, y: 6, max: 20, title: "thanh1" });
