@@ -1,0 +1,42 @@
+.btn {
+  margin: toRem(10px) auto 0;
+  font-family: $font-login;
+  font-size: toRem(34px);
+  font-weight: 700;
+  line-height: toRem(44px);
+  letter-spacing: 0em;
+  text-align: center;
+  padding: toRem(23px) 0;
+  width: 100%;
+  border-radius: toRem(23px);
+  background-color: $color-btn-in;
+  color: $color-text-secondary;
+  border: toRem(1.34px);
+  max-width: toRem(391px);
+
+  &:hover {
+    background-color: $color-btn;
+    color: $color-primary;
+  }
+}
+
+.btn-close {
+  margin-left: auto;
+  text-decoration: none;
+  color: $color-primary;
+}
+
+.btn-add {
+  border-radius: toRem(4px);
+  background-color: $color-btn-in;
+  color: $color-text-secondary;
+  width: toRem(90px);
+  height: toRem(40px);
+  margin: toRem(22px) toRem(26px) toRem(22px) auto;
+  border: toRem(1.34px);
+
+  &:hover {
+    background-color: $color-btn;
+    color: $color-primary;
+  }
+}

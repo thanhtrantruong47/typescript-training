@@ -1,0 +1,91 @@
+.form-primary {
+  display: flex;
+  flex-direction: column;
+  padding: toRem(67.5px) toRem(62.9px) toRem(82.84px) toRem(59.83px);
+  font-family: $font-login;
+  text-align: center;
+  background-color: $color-bg-login;
+  border-radius: toRem(50px);
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+
+  &__desc {
+    font-size: toRem(23.01px);
+    max-width: toRem(472px);
+    margin: 0 auto;
+    color: $color-login;
+    margin-bottom: toRem(49px);
+  }
+
+  &--small {
+    & > input {
+      height: 30px;
+    }
+  }
+
+  & > input {
+    height: toRem(84px);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.form-group {
+  & > input {
+    height: 30px;
+    width: 100%;
+    border-radius: toRem(15.34px);
+    padding: toRem(33px) toRem(32px);
+    outline: none;
+    border: toRem(1.34px);
+    font-size: toRem(23px);
+    width: 100%;
+    min-width: toRem(575px);
+    margin: toRem(10px) auto toRem(10px);
+  }
+
+  text-align: left;
+
+  &__error {
+    color: $color-error;
+    margin-bottom: toRem(5px);
+  }
+}
+
+.form-update {
+  @extend .form-primary--small;
+  background-color: $color-title-manager;
+
+  & > label {
+    margin-bottom: toRem(5px);
+  }
+
+  & > input {
+    height: toRem(20px);
+  }
+}
+
+.form-secondary {
+  margin-left: auto;
+
+  &__search {
+    padding: toRem(11px) toRem(10px) toRem(10px) toRem(40px);
+    outline: none;
+    border-radius: toRem(4px);
+    border: 1px solid rgba(226, 232, 240, 1);
+    background-image: url('../assets/images/managers/icon-search.png');
+    background-repeat: no-repeat;
+    background-size: toRem(17px) toRem(17px);
+    background-position: center left toRem(15px);
+    font-family: $font-manager;
+    font-size: toRem(16px);
+    color: $color-title-manager;
+    max-height: toRem(40px);
+    max-width: toRem(228px);
+    margin-right: toRem(85px);
+  }
+}
