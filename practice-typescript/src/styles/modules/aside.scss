@@ -1,0 +1,47 @@
+.aside {
+  min-width: toRem(250px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: $color-bg-manager;
+  color: $color-text-secondary;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: $font-manager;
+
+  &__action {
+    padding: toRem(35px) 0 0 toRem(35px);
+  }
+
+  &__head {
+    display: flex;
+    margin-bottom: toRem(73px);
+    align-items: center;
+    gap: toRem(10px);
+    font-weight: 700;
+  }
+
+  &__item {
+    text-decoration: none;
+    color: $color-text-secondary;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: toRem(60px);
+  }
+
+  &__active {
+    font-weight: 700;
+    border-right: toRem(6px) solid $color-active-secondary;
+    margin-right: toRem(-3px);
+  }
+
+  &__logout {
+    padding: toRem(20px) toRem(139px) toRem(21px) toRem(61px);
+    width: toRem(250px);
+    float: left;
+    text-decoration: none;
+    color: $color-text-secondary;
+    background-color: $color-bg-logout;
+  }
+}

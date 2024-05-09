@@ -1,0 +1,14 @@
+%flexbox-items-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+%flexbox-items-centered {
+  display: flex;
+  align-items: center;
+}
+
+%flexbox-items-wrapped {
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -1,0 +1,33 @@
+.mytable {
+  text-align: left;
+  font-family: $font-manager;
+  font-weight: 400;
+  color: $color-table;
+  width: 100%;
+  padding-left: toRem(37px);
+  font-size: 16px;
+
+
+  &__head {
+    background: $color-bg-wrapper;
+    color: $color-primary-manager;
+    padding: toRem(11px) 0 toRem(10px) toRem(37px);
+    min-height: toRem(40px);
+  }
+
+  &__head-action {
+    background: $color-bg-wrapper;
+    color: $color-primary-manager;
+  }
+
+  &__item {
+    padding: toRem(24px) 0 toRem(25px) toRem(37px);
+    border-bottom: 1px solid $color-bg-wrapper;
+    min-height:  toRem(71px);
+  }
+
+  &__item-action {
+   display: flex;
+   flex-wrap: nowrap
+  }
+}

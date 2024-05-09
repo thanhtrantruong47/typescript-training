@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  },
+  "scripts": {
+    "start": "rm -rf .parcel-cache && parcel src/pages/*.html",
+    "build": "rm -rf .parcel-cache && parcel build src/pages/*.html"
+  },
+  "dependencies": {
+    "@parcel/transformer-sass": "^2.12.0",
+    "typescript": "^5.4.5"
+  }
+}
