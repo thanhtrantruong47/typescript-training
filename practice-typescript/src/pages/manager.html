@@ -48,10 +48,10 @@
     </section>
     <form class="form-primary form-update hidden" action="">
       <a href="javascript:void(0)" class="btn-close">Close</a>
-      <h2 class="title">Update User</h2>
+      <h2 class="title">Add User</h2>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter email" />
+        <input type="email" id="email"  name="email" placeholder="Enter email" />
         <div class="error-message" id="error_email"></div>
       </div>
       <div class="form-group">
@@ -61,6 +61,16 @@
           name="password"
           id="password"
           placeholder="Enter password"
+        />
+        <span class="form-group__error" id="error_password"></span>
+      </div>
+      <div class="form-group">
+        <label for="re-password">Password</label>
+        <input
+          type="password"
+          name="re-password"
+          id="re-password"
+          placeholder="Enter re-password"
         />
         <span class="form-group__error" id="error_password"></span>
       </div>
@@ -93,11 +103,6 @@
           placeholder="Enter phone number"
         />
         <span class="form-group__error" id="error_phone"></span>
-      </div>
-      <div class="form-group">
-        <label for="role">Role</label>
-        <input type="text" name="role" id="role" placeholder="Enter role" />
-        <span class="form-group__error" id="error_role"></span>
       </div>
       <button type="submit" class="btn btn-update">Update</button>
     </form>
