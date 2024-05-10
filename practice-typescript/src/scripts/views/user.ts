@@ -1,3 +1,4 @@
+
 class UserView {
   btn: HTMLButtonElement;
   form: HTMLFormElement;
@@ -15,13 +16,25 @@ class UserView {
     });
   };
 
-  bindAdd = () => {
+  bindCloseForm = () =>  {
     this.form.addEventListener('click' , (e) => {
       e.preventDefault()
-        if(e.target instanceof HTMLButtonElement) {
+        if((e.target as HTMLButtonElement).classList.contains('btn-close')) {
+          e.preventDefault();
+          this.form.classList.toggle('hidden');
+        }
+    })
+  }
+
+
+  bindAdd = () => {
+    this.form.addEventListener('click' , (e) => {
+
+      e.preventDefault()
+        if((e.target as HTMLButtonElement).classList.contains('btn')) {
           const getValueInput = new FormData(this.form);
           const valueFields = Object.fromEntries(getValueInput);
-          localStorage.setItem('email' , JSON.stringify(valueFields["email"]))
+          localStorage.setItem('user' , JSON.stringify(valueFields))
         }
     })
   }
@@ -29,5 +42,3 @@ class UserView {
 
 export default UserView;
 
-const a = new UserView() ;
-a.bindAdd()

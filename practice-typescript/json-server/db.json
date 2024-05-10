@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "email": "nguyen@gmail.com",
+      "password": "123123123",
+      "first_name": "le",
+      "last_name": "nguyen",
+      "phone_number": "0988888888",
+      "id": "iut85lr"
+    }
+  ]
+}
