@@ -1,0 +1,5 @@
+.icon-manager {
+  background-image: url('../assets/images/managers/logo-manager.svg');
+  @include min-size(toRem(45px), toRem(45px));
+  background-repeat: no-repeat;
+}

@@ -1,0 +1,8 @@
+@use 'sass:math';
+
+// this function convert px to rem
+// pxValue is the px value, $size this is font-size html (20px)
+// math.div($pxValue, $basic-font-size ) * 1rem this is ( px / 20px ) * 1rem
+@function toRem($pxValue) {
+  @return math.div($pxValue, 20px) * 1rem;
+}

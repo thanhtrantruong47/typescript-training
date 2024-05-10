@@ -1,0 +1,9 @@
+.label-error {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: toRem(3px);
+
+  &>label {
+    color: $color-error;
+  }
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/index.scss" />
+  </head>
+  <body>
+    <section class="wrapper-manager">
+      <aside class="aside">
+        <div class="aside__action">
+          <div class="aside__head">
+            <a href="javascript:void(0)" class="icon-manager"></a>
+            <p>Company name</p>
+          </div>
+          <ul class="aside__list">
+            <li>
+              <a class="aside__item aside__active" href="javascript:void(0)"
+                >User management</a
+              >
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <div class="manager">
+        <div class="main">
+          <form class="form-secondary" action="">
+            <input
+              class="form-secondary__search"
+              type="search"
+              placeholder="Search List..."
+            />
+            <button class="btn-add">Add New</button>
+          </form>
+          <table class="mytable">
+            <tr>
+              <td class="mytable__head mytable__head--id">#</td>
+              <td class="mytable__head">Username</td>
+              <td class="mytable__head">First Name</td>
+              <td class="mytable__head">Last Name</td>
+              <td class="mytable__head">Phone Number</td>
+              <td class="mytable__head mytable__head-action">Actions</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+    <form class="form-primary form-update hidden" action="">
+      <a href="javascript:void(0)" class="btn-close">Close</a>
+      <h2 class="title">Add User</h2>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email"  name="email" placeholder="Enter email" />
+        <div class="error-message" id="error_email"></div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Enter password"
+        />
+        <span class="form-group__error" id="error_password"></span>
+      </div>
+      <div class="form-group">
+        <label for="re-password">Password</label>
+        <input
+          type="password"
+          name="re-password"
+          id="re-password"
+          placeholder="Enter re-password"
+        />
+        <span class="form-group__error" id="error_password"></span>
+      </div>
+      <div class="form-group">
+        <label for="fname">First Name</label>
+        <input
+          type="text"
+          id="fname"
+          name="first_name"
+          placeholder="Enter first name"
+        />
+        <span class="form-group__error" id="error_fname"></span>
+      </div>
+      <div class="form-group">
+        <label for="lname">Last Name</label>
+        <input
+          type="text"
+          id="lname"
+          name="last_name"
+          placeholder="Enter last name"
+        />
+        <span class="form-group__error" id="error_lname"></span>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="Enter phone number"
+        />
+        <span class="form-group__error" id="error_phone"></span>
+      </div>
+      <button type="submit" class="btn btn-update">Update</button>
+    </form>
+    <script  type="module" src="../scripts/index.ts"></script>
+  </body>
+</html>
