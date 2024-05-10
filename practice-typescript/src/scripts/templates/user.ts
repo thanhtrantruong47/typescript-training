@@ -1,8 +1,18 @@
 import User from 'scripts/types/user';
 
+const displayHeadTable = `
+    <tr>
+      <td class="mytable__head mytable__head--id">#</td>
+      <td class="mytable__head">Username</td>
+      <td class="mytable__head">First Name</td>
+      <td class="mytable__head">Last Name</td>
+      <td class="mytable__head">Phone Number</td>
+      <td class="mytable__head mytable__head-action">Actions</td>
+    </tr>
+  `;
+
 const displayUser = (user: User, index: number) => {
   const rowId = index + 1;
-  localStorage.setItem(`user ${index}`, user.email)
   return `<tr class="tbl-item">
             <td class="mytable__item id-content">${rowId}</td>
             <td class="mytable__item username-content">${user.email}</td>
@@ -15,4 +25,4 @@ const displayUser = (user: User, index: number) => {
           </tr>`;
 };
 
-export { displayUser };
+export { displayUser, displayHeadTable };
