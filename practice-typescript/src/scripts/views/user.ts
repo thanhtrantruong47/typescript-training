@@ -45,6 +45,8 @@ class UserView {
           phone_number: valueFields.phone as string,
         };
         isUserExist(user);
+        localStorage.setItem('new', JSON.stringify(user));
+        console.log(localStorage.getItem('new'))
       }
     });
   };
