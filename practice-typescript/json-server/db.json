@@ -1,12 +1,28 @@
 {
   "users": [
     {
+      "email": "nguyennnnnnnnnnnnnen@gmail.com",
+      "password": "123123123",
+      "first_name": "le",
+      "last_name": "nguyen",
+      "phone_number": "0988888888",
+      "id": "iut82135lr"
+    },
+    {
+      "email": "nguy123123en@gmail.com",
+      "password": "123123123",
+      "first_name": "le",
+      "last_name": "nguyen",
+      "phone_number": "0988888888",
+      "id": "iut21385lr"
+    },
+    {
       "email": "nguyen@gmail.com",
       "password": "123123123",
       "first_name": "le",
       "last_name": "nguyen",
       "phone_number": "0988888888",
-      "id": "iut85lr"
+      "id": "iut85123lr"
     }
   ]
 }
