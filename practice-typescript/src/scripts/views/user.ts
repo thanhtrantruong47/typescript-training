@@ -23,7 +23,6 @@ class UserView {
         button.textContent = 'Create User';
         title.textContent = 'Add User';
       }
-      // localStorage.clear();
     });
   };
 
@@ -33,12 +32,15 @@ class UserView {
       const target = e.target as HTMLElement;
       const userId = target.getAttribute('data-id') ?? '';
       localStorage.setItem('id', userId);
+
       if (target.classList.contains('action-edit')) {
         this.form.classList.toggle('hidden');
         const button = this.form.querySelector('button');
         const title = this.form.querySelector('.title');
+        if (button && title) {
           button.textContent = 'Update User';
           title.textContent = 'Update User';
+        }
       }
     });
   };
@@ -53,7 +55,7 @@ class UserView {
     });
   };
 
-  bindAdd = (handle: Function) => {
+  bindAdd = async (handle: Function) => {
     this.form.addEventListener('click', (e) => {
       e.preventDefault();
       const buttonAdd = this.form.querySelector('.btn-update')?.textContent;
@@ -70,29 +72,18 @@ class UserView {
         };
         isUserExist(user);
         handle(user);
-
-        const users = JSON.parse(localStorage.getItem('userData') || '[]');
-
-        users.push({
-          email: valueFields.email as string,
-          password: valueFields.password as string,
-          first_name: valueFields.first_name as string,
-          last_name: valueFields.last_name as string,
-          phone_number: valueFields.phone as string,
-        });
-
-        localStorage.setItem('userData', JSON.stringify(users));
-
-        this.bindDisplay();
+        this.tableUser.innerHTML += displayUser(
+          user,
+          Number(localStorage.getItem('maxId'))
+        );
       }
     });
   };
 
-  bindDisplay = () => {
-    const storedDataString = localStorage.getItem('userData');
-    const storedData: User[] = JSON.parse(storedDataString?? "");
-    let tableHTML = displayHeadTable
-    storedData.forEach((user, index) => {
+  bindDisplay = async (users: Function) => {
+    const data = await users();
+    let tableHTML = displayHeadTable;
+    data.map((user: User, index = 1) => {
       tableHTML += displayUser(user, index);
     });
     this.tableUser.innerHTML = tableHTML;
@@ -104,6 +95,7 @@ class UserView {
       const target = e.target as HTMLElement;
       const userId = target.getAttribute('data-id');
       const row: HTMLTableRowElement | null = target.closest('tr');
+      console.log(row);
 
       if (target.classList.contains('action-delete')) {
         handle(userId);
@@ -112,12 +104,27 @@ class UserView {
     });
   };
 
-  bindGetDetail = () => {};
+  bindGetDetail = (handle: Function) => {
+    this.tableUser.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const buttonEdit = this.form.querySelector('.btn-update')?.textContent;
+      const data = await handle(localStorage.getItem('id'));
+
+      if (buttonEdit === 'Update User') {
+        this.form.email.value = data.email;
+        this.form.password.value = data.password;
+        this.form.fname.value = data.first_name;
+        this.form.lname.value = data.last_name;
+        this.form.phone.value = data.phone_number;
+      }
+    });
+  };
 
   bindEdit = (handle: Function) => {
     this.form.addEventListener('click', (e) => {
       e.preventDefault();
       const buttonEdit = this.form.querySelector('.btn-update')?.textContent;
+
       if (buttonEdit === 'Update User') {
         const getValueInput = new FormData(this.form);
         const valueFields = Object.fromEntries(getValueInput);
@@ -128,6 +135,7 @@ class UserView {
           last_name: valueFields.last_name as string,
           phone_number: valueFields.phone as string,
         };
+        console.log(user);
         handle(localStorage.getItem('id'), user);
       }
     });

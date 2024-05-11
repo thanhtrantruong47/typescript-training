@@ -8,25 +8,21 @@ class UserController {
   constructor(view: UserView, service: UserService<User>) {
     this.view = view;
     this.service = service;
-
-    this.handleDisplayUser()
   }
 
   init = async () => {
     this.view.bindToggleAddNew();
     this.view.bindCloseForm();
     this.view.bindAdd(this.handleCreate)
-    await this.view.bindDisplay();
+    await this.view.bindDisplay(this.handleDisplayUser);
     this.view.bindDelete(this.handleDelete)
     this.view.bindEdit(this.handleEdit)
     this.view.bindToggleEdit()
-
+    this.view.bindGetDetail(this.handleGetById)
   }
 
   handleDisplayUser = async () => {
-    const data = await this.service.getAll();
-    localStorage.setItem('userData', JSON.stringify(data));
-    return localStorage.getItem('userData')
+    return  await this.service.getAll();
   };
 
   handleCreate = async (data: User) => {
@@ -39,6 +35,10 @@ class UserController {
 
   handleEdit = async (id: string, data: User) =>  {
     await this.service.update(id,data)
+  }
+
+  handleGetById = async (id:string) => {
+    return await this.service.getById(id)
   }
 }
 
