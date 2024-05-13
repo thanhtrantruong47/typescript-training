@@ -23,7 +23,7 @@ const trimInputValues = (formElement: HTMLFormElement): void => {
   });
 };
 
-const createElement = (el: string) : HTMLElement => {
+const createElement = (el: string): HTMLElement => {
   const element = document.getElementById(`${el}`);
   return element;
 };

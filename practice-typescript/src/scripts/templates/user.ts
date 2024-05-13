@@ -11,7 +11,7 @@ const displayHeadTable = `
     </tr>
   `;
 
-const displayUser = (user: User, index: number) : string => {
+const displayUser = (user: User, index: number): string => {
   const rowId = index + 1;
   localStorage.setItem('maxId', rowId.toString());
   localStorage.setItem(`user ${index}`, user.email);

@@ -7,14 +7,6 @@
       "last_name": "123",
       "phone_number": "0123123123",
       "id": 1
-    },
-    {
-      "email": "th@gmail.com",
-      "password": "123123123",
-      "first_name": "123",
-      "last_name": "123",
-      "phone_number": "0123123123",
-      "id": 2
     }
   ]
 }

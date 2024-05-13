@@ -7,7 +7,6 @@
   padding-left: toRem(37px);
   font-size: 16px;
 
-
   &__head {
     background: $color-bg-wrapper;
     color: $color-primary-manager;
@@ -23,11 +22,11 @@
   &__item {
     padding: toRem(24px) 0 toRem(25px) toRem(37px);
     border-bottom: 1px solid $color-bg-wrapper;
-    min-height:  toRem(71px);
+    min-height: toRem(71px);
   }
 
   &__item-action {
-   display: flex;
-   flex-wrap: nowrap
+    display: flex;
+    flex-wrap: nowrap;
   }
 }

@@ -27,6 +27,7 @@ class UserController {
 
   handleCreate = async (data: User): Promise<void> => {
     await this.service.create(data);
+    await this.service.getAll();
   };
 
   handleDelete = async (id: string): Promise<void> => {
