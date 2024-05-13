@@ -14,11 +14,11 @@ class UserView {
   constructor() {
     this.btn = document.querySelector('.btn-add') as HTMLButtonElement;
     this.form = document.querySelector('.form-primary') as HTMLFormElement;
-    this.tableUser = document.querySelector('.mytable') as HTMLTableElement;
+    this.tableUser = document.querySelector('.table-user') as HTMLTableElement;
     this.errorMessage = Array.from(document.querySelectorAll('span'));
   }
 
-  bindToggleAddNew = () => {
+  bindToggleAddNew = (): void => {
     this.btn.addEventListener('click', (e) => {
       e.preventDefault();
       this.form.classList.toggle('hidden');
@@ -33,7 +33,7 @@ class UserView {
     });
   };
 
-  bindToggleEdit = () => {
+  bindToggleEdit = (): void => {
     this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
@@ -54,7 +54,7 @@ class UserView {
     });
   };
 
-  bindCloseForm = () => {
+  bindCloseForm = (): void => {
     this.form.addEventListener('click', (e) => {
       e.preventDefault();
       if ((e.target as HTMLButtonElement).classList.contains('btn-close')) {
@@ -64,7 +64,7 @@ class UserView {
     });
   };
 
-  bindAdd = async (handle: Function) => {
+  bindAdd = async (handle: Function): Promise<void> => {
     this.form.addEventListener('click', (e) => {
       e.preventDefault();
       const buttonAdd = this.form.querySelector('.btn-update')?.textContent;
@@ -102,7 +102,7 @@ class UserView {
     });
   };
 
-  bindDisplay = async (users: Function) => {
+  bindDisplay = async (users: Function): Promise<void> => {
     const data = await users();
     let tableHTML = displayHeadTable;
     data.map((user: User, index = 1) => {
@@ -111,7 +111,7 @@ class UserView {
     this.tableUser.innerHTML = tableHTML;
   };
 
-  bindDelete = (handle: Function) => {
+  bindDelete = (handle: Function): void => {
     this.tableUser.addEventListener('click', (e) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
@@ -125,7 +125,7 @@ class UserView {
     });
   };
 
-  bindGetDetail = (handle: Function) => {
+  bindGetDetail = (handle: Function): void => {
     this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
       const buttonEdit = this.form.querySelector('.btn-update')?.textContent;
@@ -141,13 +141,13 @@ class UserView {
     });
   };
 
-  bindShowInfoUpdate = (user: User) => {
+  bindShowInfoUpdate = (user: User): void => {
     this.row.querySelector('.firstName-content').textContent = user.first_name;
     this.row.querySelector('.lastName-content').textContent = user.last_name;
     this.row.querySelector('.phone-content').textContent = user.phone_number;
   };
 
-  bindEdit = (handle: Function) => {
+  bindEdit = (handle: Function): void => {
     this.form.addEventListener('click', (e) => {
       e.preventDefault();
       trimInputValues(this.form);

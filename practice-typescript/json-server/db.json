@@ -3,42 +3,18 @@
     {
       "email": "thanh@gmail.com",
       "password": "123123123",
-      "first_name": "aa112366666666",
-      "last_name": "123",
-      "phone_number": "0123456789",
-      "id": "hMcMBiV"
-    },
-    {
-      "email": "kim@gamil.com",
-      "password": "123123123",
-      "first_name": "THAH123",
-      "last_name": "T",
-      "phone_number": "0134569999",
-      "id": "Erk4Fd_"
-    },
-    {
-      "email": "wqeqwe@gmail.com",
-      "password": "123123123",
       "first_name": "123",
       "last_name": "123",
-      "phone_number": "0123456123",
-      "id": "-7M_KRI"
+      "phone_number": "0123123123",
+      "id": 1
     },
     {
       "email": "th@gmail.com",
       "password": "123123123",
       "first_name": "123",
       "last_name": "123",
-      "phone_number": "0123412312",
-      "id": "8KClUPi"
-    },
-    {
-      "email": "thanh12345@gmail.com",
-      "password": "123123123123",
-      "first_name": "123",
-      "last_name": "123",
       "phone_number": "0123123123",
-      "id": "mrYxr8c"
+      "id": 2
     }
   ]
 }

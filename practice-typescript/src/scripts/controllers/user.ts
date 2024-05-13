@@ -21,23 +21,23 @@ class UserController {
     this.view.bindGetDetail(this.handleGetById);
   };
 
-  handleDisplayUser = async () => {
+  handleDisplayUser = async (): Promise<User[]> => {
     return await this.service.getAll();
   };
 
-  handleCreate = async (data: User) => {
+  handleCreate = async (data: User): Promise<void> => {
     await this.service.create(data);
   };
 
-  handleDelete = async (id: string) => {
+  handleDelete = async (id: string): Promise<void> => {
     await this.service.delete(id);
   };
 
-  handleEdit = async (id: string, data: User) => {
+  handleEdit = async (id: string, data: User): Promise<void> => {
     await this.service.update(id, data);
   };
 
-  handleGetById = async (id: string) => {
+  handleGetById = async (id: string): Promise<User> => {
     return await this.service.getById(id);
   };
 }

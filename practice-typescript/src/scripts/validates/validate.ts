@@ -2,17 +2,17 @@ import { MESSAGE_ERROR } from 'scripts/constains/constain';
 import { createElement } from '../helpers/helper';
 
 const validationFunctions = {
-  validateEmail: (email: string) => {
+  validateEmail: (email: string): boolean => {
     var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/i;
     return emailPattern.test(email);
   },
-  validatePassword: (password: string) => {
+  validatePassword: (password: string): boolean => {
     return password.length >= 7;
   },
-  validateRePassword: (rePassword: string, password: string) => {
+  validateRePassword: (rePassword: string, password: string): boolean => {
     return rePassword.length >= 7 && rePassword === password;
   },
-  validatePhone: (phoneNumber: string) => {
+  validatePhone: (phoneNumber: string): boolean => {
     var phoneRegex = /^0\d{9}$/;
     return phoneRegex.test(phoneNumber);
   },
@@ -66,7 +66,7 @@ const getErrorMessage = (key: string, value: string) => {
 const validateForm = (
   dataForm: HTMLFormElement,
   errorMessage: HTMLElement[]
-) => {
+): boolean => {
   const getValueInput = new FormData(dataForm);
   const valueFields = Object.fromEntries(getValueInput);
   let spanId: string;

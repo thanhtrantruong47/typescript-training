@@ -1,4 +1,4 @@
-const isUserExist = (email: string) => {
+const isUserExist = (email: string): boolean => {
   const keys = Object.keys(localStorage);
   const users: string[] = [];
 
@@ -15,7 +15,7 @@ const isUserExist = (email: string) => {
   return true;
 };
 
-const trimInputValues = (formElement: HTMLFormElement) => {
+const trimInputValues = (formElement: HTMLFormElement): void => {
   var inputFields = formElement.querySelectorAll('input');
 
   inputFields.forEach((input) => {
@@ -23,7 +23,7 @@ const trimInputValues = (formElement: HTMLFormElement) => {
   });
 };
 
-const createElement = (el: string) => {
+const createElement = (el: string) : HTMLElement => {
   const element = document.getElementById(`${el}`);
   return element;
 };
