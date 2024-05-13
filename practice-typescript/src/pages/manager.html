@@ -33,8 +33,7 @@
             />
             <button class="btn-add">Add New</button>
           </form>
-          <table class="mytable">
-          </table>
+          <table class="mytable"></table>
         </div>
       </div>
     </section>
@@ -43,8 +42,8 @@
       <h2 class="title">Add User</h2>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email"  name="email" placeholder="Enter email" />
-        <div class="error-message" id="error_email"></div>
+        <input type="email" id="email" name="email" placeholder="Enter email" />
+        <span class="form-group__error" id="error_email"></span>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
@@ -64,7 +63,7 @@
           id="re-password"
           placeholder="Enter re-password"
         />
-        <span class="form-group__error" id="error_password"></span>
+        <span class="form-group__error" id="error_repassword"></span>
       </div>
       <div class="form-group">
         <label for="fname">First Name</label>
@@ -98,6 +97,6 @@
       </div>
       <button type="submit" class="btn btn-update">Create User</button>
     </form>
-    <script  type="module" src="../scripts/index.ts"></script>
+    <script type="module" src="../scripts/index.ts"></script>
   </body>
 </html>

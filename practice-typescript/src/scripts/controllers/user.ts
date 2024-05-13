@@ -13,33 +13,33 @@ class UserController {
   init = async () => {
     this.view.bindToggleAddNew();
     this.view.bindCloseForm();
-    this.view.bindAdd(this.handleCreate)
+    this.view.bindAdd(this.handleCreate);
     await this.view.bindDisplay(this.handleDisplayUser);
-    this.view.bindDelete(this.handleDelete)
-    this.view.bindEdit(this.handleEdit)
-    this.view.bindToggleEdit()
-    this.view.bindGetDetail(this.handleGetById)
-  }
+    this.view.bindDelete(this.handleDelete);
+    this.view.bindEdit(this.handleEdit);
+    this.view.bindToggleEdit();
+    this.view.bindGetDetail(this.handleGetById);
+  };
 
   handleDisplayUser = async () => {
-    return  await this.service.getAll();
+    return await this.service.getAll();
   };
 
   handleCreate = async (data: User) => {
     await this.service.create(data);
-  }
+  };
 
   handleDelete = async (id: string) => {
-    await this.service.delete(id)
-  }
+    await this.service.delete(id);
+  };
 
-  handleEdit = async (id: string, data: User) =>  {
-    await this.service.update(id,data)
-  }
+  handleEdit = async (id: string, data: User) => {
+    await this.service.update(id, data);
+  };
 
-  handleGetById = async (id:string) => {
-    return await this.service.getById(id)
-  }
+  handleGetById = async (id: string) => {
+    return await this.service.getById(id);
+  };
 }
 
 export default UserController;

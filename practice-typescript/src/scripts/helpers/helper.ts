@@ -1,17 +1,31 @@
-import User from "scripts/types/user";
-
-const isUserExist = (user : User) => {
-
+const isUserExist = (email: string) => {
   const keys = Object.keys(localStorage);
-  keys.forEach(function (key) {
-    var value = localStorage.getItem(key);
-    if(user.email === value) {
-      // return
-    } else {
-      // console.log('next')
-    }
+  const users: string[] = [];
+
+  keys.forEach((key) => {
+    const value = localStorage.getItem(key);
+    users.push(value);
   });
-}
 
+  for (let i = 0; i < users.length; i++) {
+    if (email === users[i]) {
+      return false;
+    }
+  }
+  return true;
+};
 
-export { isUserExist}
+const trimInputValues = (formElement: HTMLFormElement) => {
+  var inputFields = formElement.querySelectorAll('input');
+
+  inputFields.forEach((input) => {
+    input.value = input.value.trim();
+  });
+};
+
+const createElement = (el: string) => {
+  const element = document.getElementById(`${el}`);
+  return element;
+};
+
+export { isUserExist, trimInputValues, createElement };

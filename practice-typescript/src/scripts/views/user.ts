@@ -1,16 +1,21 @@
 import User from 'scripts/types/user';
 import { displayHeadTable, displayUser } from 'scripts/templates/user';
-import { isUserExist } from 'scripts/helpers/helper';
+import { isUserExist, trimInputValues } from 'scripts/helpers/helper';
+import { validateForm } from 'scripts/validates/validate';
+import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constains/constain';
 
 class UserView {
   btn: HTMLButtonElement;
   form: HTMLFormElement;
   tableUser: HTMLTableElement;
+  errorMessage: HTMLElement[];
+  row: HTMLTableRowElement;
 
   constructor() {
     this.btn = document.querySelector('.btn-add') as HTMLButtonElement;
     this.form = document.querySelector('.form-primary') as HTMLFormElement;
     this.tableUser = document.querySelector('.mytable') as HTMLTableElement;
+    this.errorMessage = Array.from(document.querySelectorAll('span'));
   }
 
   bindToggleAddNew = () => {
@@ -19,6 +24,8 @@ class UserView {
       this.form.classList.toggle('hidden');
       const button = this.form.querySelector('button');
       const title = this.form.querySelector('.title');
+      this.form.reset();
+
       if (button && title) {
         button.textContent = 'Create User';
         title.textContent = 'Add User';
@@ -27,14 +34,16 @@ class UserView {
   };
 
   bindToggleEdit = () => {
-    this.tableUser.addEventListener('click', (e) => {
+    this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
       const userId = target.getAttribute('data-id') ?? '';
       localStorage.setItem('id', userId);
+      this.row = target.closest('tr');
 
       if (target.classList.contains('action-edit')) {
         this.form.classList.toggle('hidden');
+
         const button = this.form.querySelector('button');
         const title = this.form.querySelector('.title');
         if (button && title) {
@@ -63,6 +72,7 @@ class UserView {
       if (buttonAdd === 'Create User' && target.classList.contains('btn')) {
         const getValueInput = new FormData(this.form);
         const valueFields = Object.fromEntries(getValueInput);
+
         const user: User = {
           email: valueFields.email as string,
           password: valueFields.password as string,
@@ -70,12 +80,24 @@ class UserView {
           last_name: valueFields.last_name as string,
           phone_number: valueFields.phone as string,
         };
-        isUserExist(user);
-        handle(user);
-        this.tableUser.innerHTML += displayUser(
-          user,
-          Number(localStorage.getItem('maxId'))
-        );
+        trimInputValues(this.form);
+
+        const validateFrom = validateForm(this.form, this.errorMessage);
+        if (!validateFrom) {
+          return;
+        } else {
+          if (!isUserExist(user.email)) {
+            alert(MESSAGE_ERROR.ACCOUNT_EXIST);
+          } else {
+            handle(user);
+            this.tableUser.innerHTML += displayUser(
+              user,
+              Number(localStorage.getItem('maxId'))
+            );
+            alert(MESSAGE_SUCCESS.CREATE_SUCCESS);
+            this.form.classList.toggle('hidden');
+          }
+        }
       }
     });
   };
@@ -95,7 +117,6 @@ class UserView {
       const target = e.target as HTMLElement;
       const userId = target.getAttribute('data-id');
       const row: HTMLTableRowElement | null = target.closest('tr');
-      console.log(row);
 
       if (target.classList.contains('action-delete')) {
         handle(userId);
@@ -120,12 +141,20 @@ class UserView {
     });
   };
 
+  bindShowInfoUpdate = (user: User) => {
+    this.row.querySelector('.firstName-content').textContent = user.first_name;
+    this.row.querySelector('.lastName-content').textContent = user.last_name;
+    this.row.querySelector('.phone-content').textContent = user.phone_number;
+  };
+
   bindEdit = (handle: Function) => {
     this.form.addEventListener('click', (e) => {
       e.preventDefault();
+      trimInputValues(this.form);
       const buttonEdit = this.form.querySelector('.btn-update')?.textContent;
+      const target = e.target as HTMLElement;
 
-      if (buttonEdit === 'Update User') {
+      if (buttonEdit === 'Update User' && target.classList.contains('btn')) {
         const getValueInput = new FormData(this.form);
         const valueFields = Object.fromEntries(getValueInput);
         const user: User = {
@@ -135,8 +164,14 @@ class UserView {
           last_name: valueFields.last_name as string,
           phone_number: valueFields.phone as string,
         };
-        console.log(user);
-        handle(localStorage.getItem('id'), user);
+
+        const check = validateForm(this.form, this.errorMessage);
+        if (check) {
+          handle(localStorage.getItem('id'), user);
+          alert(MESSAGE_SUCCESS.UPDATE_SUCCESS);
+          this.form.classList.toggle('hidden');
+          this.bindShowInfoUpdate(user);
+        }
       }
     });
   };

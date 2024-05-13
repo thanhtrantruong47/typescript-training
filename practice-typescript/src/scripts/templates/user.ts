@@ -13,7 +13,8 @@ const displayHeadTable = `
 
 const displayUser = (user: User, index: number) => {
   const rowId = index + 1;
-  localStorage.setItem('maxId', rowId.toString())
+  localStorage.setItem('maxId', rowId.toString());
+  localStorage.setItem(`user ${index}`, user.email);
   return `<tr class="tbl-item">
             <td class="mytable__item id-content">${rowId}</td>
             <td class="mytable__item username-content">${user.email}</td>
