@@ -1,4 +1,4 @@
-import { BASE_URL, USERS } from 'scripts/constains/constain';
+import { BASE_URL, USERS } from 'scripts/constants/api';
 
 class ApiService<T> {
   resourceUrl: string;

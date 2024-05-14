@@ -1,5 +1,5 @@
-import { MESSAGE_ERROR } from 'scripts/constains/constain';
-import { createElement } from '../helpers/helper';
+import { MESSAGE_ERROR } from 'scripts/constants/message';
+import { createElement } from 'scripts/helpers/helper';
 
 const validationFunctions = {
   validateEmail: (email: string): boolean => {

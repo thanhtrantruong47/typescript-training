@@ -2,7 +2,7 @@ import User from 'scripts/types/user';
 import { displayHeadTable, displayUser } from 'scripts/templates/user';
 import { isUserExist, trimInputValues } from 'scripts/helpers/helper';
 import { validateForm } from 'scripts/validates/validate';
-import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constains/constain';
+import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constants/message';
 
 class UserView {
   btn: HTMLButtonElement;
@@ -37,8 +37,6 @@ class UserView {
     this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
-      const userId = target.getAttribute('data-id') ?? '';
-      localStorage.setItem('id', userId);
       this.row = target.closest('tr');
 
       if (target.classList.contains('action-edit')) {
@@ -60,12 +58,13 @@ class UserView {
       if ((e.target as HTMLButtonElement).classList.contains('btn-close')) {
         e.preventDefault();
         this.form.classList.toggle('hidden');
+        this.form.reset();
       }
     });
   };
 
-  bindAdd = async (handle: Function): Promise<void> => {
-    this.form.addEventListener('click', (e) => {
+  bindAdd = async (handle: Function, users :Function): Promise<void> => {
+    this.form.addEventListener('click', async (e) => {
       e.preventDefault();
       const buttonAdd = this.form.querySelector('.btn-update')?.textContent;
       const target = e.target as HTMLElement;
@@ -90,6 +89,7 @@ class UserView {
             alert(MESSAGE_ERROR.ACCOUNT_EXIST);
           } else {
             handle(user);
+            await this.bindDisplay(users)
             this.tableUser.innerHTML += displayUser(
               user,
               Number(localStorage.getItem('maxId'))
@@ -103,6 +103,7 @@ class UserView {
   };
 
   bindDisplay = async (users: Function): Promise<void> => {
+    localStorage.clear()
     const data = await users();
     let tableHTML = displayHeadTable;
     data.map((user: User, index = 1) => {
@@ -128,8 +129,10 @@ class UserView {
   bindGetDetail = (handle: Function): void => {
     this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
+      const target = e.target as HTMLElement;
+      const userId = target.getAttribute('data-id');
       const buttonEdit = this.form.querySelector('.btn-update')?.textContent;
-      const data = await handle(localStorage.getItem('id'));
+      const data = await handle(userId);
 
       if (buttonEdit === 'Update User') {
         this.form.email.value = data.email;

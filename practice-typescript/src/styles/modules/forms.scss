@@ -1,11 +1,10 @@
 .form-primary {
   display: flex;
   flex-direction: column;
-  padding: toRem(67.5px) toRem(62.9px) toRem(82.84px) toRem(59.83px);
+  padding: toRem(96px) toRem(98px);
   font-family: $font-login;
   text-align: center;
-  background-color: $color-bg-login;
-  border-radius: toRem(50px);
+  max-width: toRem(760px);
   left: 50%;
   top: 50%;
   position: absolute;
@@ -18,16 +17,6 @@
     color: $color-login;
     margin-bottom: toRem(49px);
   }
-
-  &--small {
-    & > input {
-      height: 30px;
-    }
-  }
-
-  & > input {
-    height: toRem(84px);
-  }
 }
 
 .hidden {
@@ -35,31 +24,44 @@
 }
 
 .form-group {
+  text-align: left;
+  font-family: $font-manager;
+
   & > input {
     height: 30px;
     width: 100%;
-    border-radius: toRem(15.34px);
+    border-radius: toRem(8px);
     padding: toRem(33px) toRem(32px);
     outline: none;
     border: toRem(1.34px);
     font-size: toRem(23px);
-    width: 100%;
-    min-width: toRem(575px);
+    width: 564px;
+    max-height: 56px;
     margin: toRem(10px) auto toRem(10px);
   }
 
-  text-align: left;
+  &__active {
+    border: 2px solid rgba(235, 87, 87, 1);
+  }
 
   &__error {
-    color: $color-error;
-    margin-bottom: toRem(5px);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+    color: rgba(235, 87, 87, 1);
+  }
+
+  & > label {
+    font-size: toRem(12px);
+    font-weight: 600;
+    line-height: 18px;
+    text-align: left;
   }
 }
 
 .form-update {
-  @extend .form-primary--small;
-  background-color: $color-title-manager;
-
+  background-color: bisque;
   & > label {
     margin-bottom: toRem(5px);
   }

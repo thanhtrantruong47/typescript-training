@@ -1,5 +1,4 @@
-const BASE_URL = 'http://localhost:3000';
-const USERS = 'users';
+
 
 enum MESSAGE_ERROR {
   EMAIL = 'Please enter a valid email address',
@@ -17,4 +16,4 @@ enum MESSAGE_SUCCESS {
   UPDATE_SUCCESS = 'Update success a user',
 }
 
-export { BASE_URL, USERS, MESSAGE_ERROR, MESSAGE_SUCCESS };
+export {  MESSAGE_ERROR, MESSAGE_SUCCESS };

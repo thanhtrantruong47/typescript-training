@@ -13,7 +13,7 @@ class UserController {
   init = async () => {
     this.view.bindToggleAddNew();
     this.view.bindCloseForm();
-    this.view.bindAdd(this.handleCreate);
+    this.view.bindAdd(this.handleCreate,this.handleDisplayUser);
     await this.view.bindDisplay(this.handleDisplayUser);
     this.view.bindDelete(this.handleDelete);
     this.view.bindEdit(this.handleEdit);
