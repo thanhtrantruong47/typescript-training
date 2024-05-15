@@ -173,6 +173,11 @@ class UserView {
         localStorage.removeItem(`email ${userId}`);
         handle(userId);
         row?.remove();
+        toastMessage(
+          this.toast,
+          MESSAGE_SUCCESS.DELETE_SUCCESS,
+          'toast__success'
+        );
       }
     });
   };

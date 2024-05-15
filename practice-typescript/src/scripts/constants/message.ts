@@ -14,6 +14,9 @@ enum MESSAGE_ERROR {
 enum MESSAGE_SUCCESS {
   CREATE_SUCCESS = 'Create success a new user',
   UPDATE_SUCCESS = 'Update success a user',
+  DELETE_SUCCESS = 'Delete success user'
 }
 
-export {  MESSAGE_ERROR, MESSAGE_SUCCESS };
+const TIME_MESSAGE = 3 * 1000
+
+export {  MESSAGE_ERROR, MESSAGE_SUCCESS ,TIME_MESSAGE};
