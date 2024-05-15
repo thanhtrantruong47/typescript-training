@@ -1,17 +1,12 @@
-interface User {
-  email: string;
-  password: string;
-  first_name: string;
-  last_name: string;
-  phone_number: number;
-}
+import User from "scripts/types/user";
+
 
 class UserModel {
   email: string;
   password: string;
   first_name: string;
   last_name: string;
-  phone_number: number;
+  phone_number: string;
 
   constructor({ email, password, first_name, last_name, phone_number }: User) {
     this.email = email;
@@ -22,4 +17,4 @@ class UserModel {
   }
 }
 
-export { UserModel, User };
+export { UserModel };

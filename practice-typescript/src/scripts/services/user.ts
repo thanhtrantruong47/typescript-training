@@ -1,17 +1,18 @@
-import { BASE_URL, USERS } from 'scripts/constants/api';
+import { USERS, BASE_URL } from "scripts/constants/api";
+import { UserModel } from "scripts/models/user";
 
-class ApiService<T> {
+class ApiService {
   resourceUrl: string;
 
   constructor() {
     this.resourceUrl = `${BASE_URL}/${USERS}`;
   }
 
-  async getAll(): Promise<T[]> {
+  async getAll(): Promise<UserModel[]> {
     try {
       const response = await fetch(this.resourceUrl);
       if (!response.ok) {
-        throw new Error('Failed to fetch data');
+        throw new Error("Failed to fetch data");
       }
       return response.json();
     } catch (error: any) {
@@ -19,11 +20,11 @@ class ApiService<T> {
     }
   }
 
-  async getById(id: string): Promise<T> {
+  async getById(id: string): Promise<UserModel> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch data');
+        throw new Error("Failed to fetch data");
       }
       return response.json();
     } catch (error: any) {
@@ -31,17 +32,17 @@ class ApiService<T> {
     }
   }
 
-  async create(data: T): Promise<T> {
+  async create(data: UserModel): Promise<UserModel> {
     try {
       const response = await fetch(this.resourceUrl, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        throw new Error('Failed to create data');
+        throw new Error("Failed to create data");
       }
       return response.json();
     } catch (error: any) {
@@ -49,17 +50,17 @@ class ApiService<T> {
     }
   }
 
-  async update(id: string, data: T): Promise<T> {
+  async update(id: string, data: UserModel): Promise<UserModel> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        throw new Error('Failed to update data');
+        throw new Error("Failed to update data");
       }
       return response.json();
     } catch (error: any) {
@@ -70,10 +71,10 @@ class ApiService<T> {
   async delete(id: string): Promise<void> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
       if (!response.ok) {
-        throw new Error('Failed to delete data');
+        throw new Error("Failed to delete data");
       }
     } catch (error: any) {
       throw new Error(`Failed to delete data: ${error.message}`);

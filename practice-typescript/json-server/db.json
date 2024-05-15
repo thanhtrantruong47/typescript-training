@@ -1,44 +1,12 @@
 {
   "users": [
     {
+      "id": "e274",
       "email": "thanh@gmail.com",
       "password": "123123123",
       "first_name": "123",
       "last_name": "123",
-      "phone_number": "0123123123",
-      "id": 1
-    },
-    {
-      "email": "thanh11@gmail.com",
-      "password": "123123123",
-      "first_name": "123",
-      "last_name": "123",
-      "phone_number": "0123123123",
-      "id": 2
-    },
-    {
-      "email": "thanh@123gmail.com",
-      "password": "123123123",
-      "first_name": "123",
-      "last_name": "123",
-      "phone_number": "0123123123",
-      "id": 3
-    },
-    {
-      "email": "user4@gmail.com",
-      "password": "123123123",
-      "first_name": "First4",
-      "last_name": "Last4",
-      "phone_number": "0123123124",
-      "id": 4
-    },
-    {
-      "email": "11@gmail.com",
-      "password": "123123123",
-      "first_name": "123123",
-      "last_name": "123123",
-      "phone_number": "0123123123",
-      "id": 5
+      "phone_number": "0123123123"
     }
   ]
 }
