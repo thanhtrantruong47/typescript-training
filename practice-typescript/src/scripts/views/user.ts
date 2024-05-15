@@ -13,7 +13,6 @@ class UserView {
   errorMessage: HTMLElement[];
   row: HTMLTableRowElement | null;
   toast: HTMLElement;
-  progress: HTMLElement;
 
   constructor() {
     // Initialize DOM elements
@@ -23,7 +22,6 @@ class UserView {
     this.errorMessage = Array.from(document.querySelectorAll('span'));
     this.row = null;
     this.toast = document.querySelector('.toast');
-    this.progress = document.querySelector('.progress');
   }
 
   // Toggle form visibility and reset form fields
