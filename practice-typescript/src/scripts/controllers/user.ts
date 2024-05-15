@@ -1,4 +1,3 @@
-// UserController.ts
 
 import UserService from 'scripts/services/user';
 import UserView from 'scripts/views/user';
@@ -24,24 +23,24 @@ class UserController {
     this.view.bindGetDetail(this.handleGetById);
   };
 
-  handleGetUsers = async (): Promise<UserModel[]> => { // Sử dụng UserModel thay vì User
+  handleGetUsers = async (): Promise<UserModel[]> => {
     return await this.service.getAll();
   };
 
-  handleCreate = async (data: UserModel): Promise<UserModel> => { // Sử dụng UserModel thay vì User
-    const user =  await this.service.create(data);
-    return user
+  handleCreate = async (data: UserModel): Promise<UserModel> => {
+    const user = await this.service.create(data);
+    return user;
   };
 
   handleDelete = async (id: string): Promise<void> => {
     await this.service.delete(id);
   };
 
-  handleEdit = async (id: string, data: UserModel): Promise<void> => { // Sử dụng UserModel thay vì User
+  handleEdit = async (id: string, data: UserModel): Promise<void> => {
     await this.service.update(id, data);
   };
 
-  handleGetById = async (id: string): Promise<UserModel> => { // Sử dụng UserModel thay vì User
+  handleGetById = async (id: string): Promise<UserModel> => {
     return await this.service.getById(id);
   };
 }
