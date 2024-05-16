@@ -1,3 +1,4 @@
+import HTTPMethod from 'scripts/constants/HTTPMethod';
 import { USERS, BASE_URL } from 'scripts/constants/api';
 import { UserModel } from 'scripts/models/user';
 
@@ -35,7 +36,7 @@ class ApiService {
   async create(data: UserModel): Promise<UserModel> {
     try {
       const response = await fetch(this.resourceUrl, {
-        method: 'POST',
+        method: HTTPMethod.POST,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -53,7 +54,7 @@ class ApiService {
   async update(id: string, data: UserModel): Promise<UserModel> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`, {
-        method: 'PUT',
+        method: HTTPMethod.PUT,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -71,7 +72,7 @@ class ApiService {
   async delete(id: string): Promise<void> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`, {
-        method: 'DELETE',
+        method: HTTPMethod.DELETE,
       });
       if (!response.ok) {
         throw new Error('Failed to delete data');
