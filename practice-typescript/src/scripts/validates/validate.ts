@@ -7,8 +7,6 @@ const validationFunctions = {
     return emailPattern.test(email);
   },
   validatePassword: (password: string): boolean => password.length >= 7,
-  validateRePassword: (rePassword: string, password: string): boolean =>
-    rePassword.length >= 7 && rePassword === password,
   validatePhone: (phoneNumber: string): boolean => {
     const phoneRegex = /^0\d{9}$/;
     return phoneRegex.test(phoneNumber);
@@ -21,10 +19,6 @@ const validationFunctions = {
     !validationFunctions.validatePassword(password)
       ? MESSAGE_ERROR.PASSWORD
       : MESSAGE_ERROR.EMPTY,
-  rePasswordError: (rePassword: string, password: string) =>
-    !validationFunctions.validateRePassword(rePassword, password)
-      ? MESSAGE_ERROR.RE_PASSWORD
-      : MESSAGE_ERROR.EMPTY,
   nameError: (name: string) =>
     !name ? MESSAGE_ERROR.FIRST_NAME : MESSAGE_ERROR.EMPTY,
   lastNameError: (name: string) =>
@@ -36,24 +30,18 @@ const validationFunctions = {
 };
 
 const errorFunctions: {
-  [key: string]: (value: string, password?: string) => string;
+  [key: string]: (value: string) => string;
 } = {
   email: validationFunctions.emailError,
   password: validationFunctions.passwordError,
-  repassword: (value: string, password?: string) =>
-    validationFunctions.rePasswordError(value, password || ''),
   first_name: validationFunctions.nameError,
   last_name: validationFunctions.lastNameError,
   phone: validationFunctions.phoneError,
 };
 
-const getErrorMessage = (
-  key: string,
-  value: string,
-  password?: string
-): string => {
+const getErrorMessage = (key: string, value: string): string => {
   const errorFunction = errorFunctions[key];
-  return errorFunction ? errorFunction(value, password) : '';
+  return errorFunction(value);
 };
 
 const validateForm = (
@@ -65,11 +53,7 @@ const validateForm = (
   let isValid = true;
 
   for (const [key, value] of getValueInput.entries()) {
-    const errorMessage = getErrorMessage(
-      key,
-      value.toString(),
-      localStorage.getItem('password')
-    );
+    const errorMessage = getErrorMessage(key, value.toString());
     createElement(arrError.shift()).textContent = errorMessage;
     isValid = errorMessage ? false : true;
   }

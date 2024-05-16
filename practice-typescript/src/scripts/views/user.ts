@@ -61,7 +61,6 @@ class UserView {
       trimInputValues(this.form);
 
       const isValid = validateForm(this.form, this.errorMessage);
-      localStorage.setItem('password', this.form.password.value);
 
       if (!isValid) return;
 
