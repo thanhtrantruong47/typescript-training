@@ -11,9 +11,9 @@ const displayHeadTable = `
     </tr>
   `;
 
-const displayTableEmpty = (value: string) =>`
+const displayTableEmpty = (value: string) => `
 <tr>
-  <td class="emty-table">${value}</td>
+  <td class="empty-table">${value}</td>
   </tr>
 `;
 

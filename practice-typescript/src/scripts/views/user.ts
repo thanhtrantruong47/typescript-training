@@ -1,11 +1,15 @@
 import User from 'scripts/types/user';
-import { displayHeadTable, displayTableEmpty, displayUser } from 'scripts/templates/user';
+import {
+  displayHeadTable,
+  displayTableEmpty,
+  displayUser,
+} from 'scripts/templates/user';
 import { isUserExist } from 'scripts/helpers/checkUser';
 import { trimInputValues } from 'scripts/helpers/trimValue';
 import { validateForm } from 'scripts/validates/validate';
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constants/message';
 import { toastMessage } from 'scripts/helpers/toast';
-import { EMPTYVALUE } from 'scripts/constants/emtytable';
+import { EMPTY_VALUE } from 'scripts/constants/emtytable';
 
 class UserView {
   btn: HTMLButtonElement;
@@ -215,37 +219,35 @@ class UserView {
     localStorage.clear();
     const data = await users();
     let tableHTML = displayHeadTable;
-    if(data) {
+    if (data) {
       data.forEach((user: User, index: number) => {
         tableHTML += displayUser(user, index);
       });
     } else {
-      tableHTML += displayTableEmpty(EMPTYVALUE.EMPTYVALUEGETUSERS)
+      tableHTML += displayTableEmpty(EMPTY_VALUE.EMPTY_VALUE_GET_USERS);
     }
     this.tableUser.innerHTML = tableHTML;
-
   };
 
   bindSearch = (handle: Function) => {
     this.search.addEventListener('keypress', async (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const valueSearch = this.search.querySelector('input').value;
-            const data = await handle(valueSearch);
-            let tableHTML = displayHeadTable;
-            if(data) {
-              data.forEach((user: User, index: number) => {
-                tableHTML += displayUser(user, index);
-              });
-              this.tableUser.innerHTML = tableHTML;
-            } else {
-              tableHTML = displayTableEmpty(EMPTYVALUE.EMPTYVALUESEARCH)
-            }
-            this.tableUser.innerHTML = tableHTML;
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const valueSearch = this.search.querySelector('input').value;
+        const data = await handle(valueSearch);
+        let tableHTML = displayHeadTable;
+        if (data) {
+          data.forEach((user: User, index: number) => {
+            tableHTML += displayUser(user, index);
+          });
+          this.tableUser.innerHTML = tableHTML;
+        } else {
+          tableHTML += displayTableEmpty(EMPTY_VALUE.EMPTY_VALUE_SEARCH);
         }
+        this.tableUser.innerHTML = tableHTML;
+      }
     });
-};
-
+  };
 }
 
 export default UserView;
