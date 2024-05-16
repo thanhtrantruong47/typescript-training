@@ -81,6 +81,26 @@ class ApiService {
       throw new Error(`Failed to delete data: ${error.message}`);
     }
   }
+
+  async searchUserByName(email: string): Promise<void> {
+    const url = new URL(this.resourceUrl);
+    url.searchParams.append('email', email);
+
+    try {
+      const response = await fetch(url.toString(), {
+        method: HTTPMethod.GET,
+        headers: { 'content-type': 'application/json' },
+      });
+
+      if (response.ok) {
+        return await response.json();
+      } else {
+        throw new Error('Failed to fetch user by email');
+      }
+    } catch (error: any) {
+      throw new Error(`Error occurred during user search ${error.message}`);
+    }
+  }
 }
 
 export default ApiService;

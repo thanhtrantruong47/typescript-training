@@ -20,6 +20,7 @@ class UserController {
     this.view.bindEdit(this.handleEdit);
     this.view.bindToggleEdit();
     this.view.bindGetDetail(this.handleGetById);
+    this.view.bindSearch(this.handleSearchByName);
   };
 
   handleGetUsers = async (): Promise<UserModel[]> => {
@@ -41,6 +42,11 @@ class UserController {
 
   handleGetById = async (id: string): Promise<UserModel> => {
     return await this.service.getById(id);
+  };
+
+  handleSearchByName = async (email: string): Promise<void> => {
+    const data = await this.service.searchUserByName(email);
+    return data;
   };
 }
 

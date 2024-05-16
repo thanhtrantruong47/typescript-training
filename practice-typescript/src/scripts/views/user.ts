@@ -14,6 +14,7 @@ class UserView {
   row: HTMLTableRowElement | null;
   toast: HTMLElement;
   fields: HTMLInputElement[];
+  search: HTMLFormElement;
 
   constructor() {
     // Initialize DOM elements
@@ -24,6 +25,7 @@ class UserView {
     this.row = null;
     this.toast = document.querySelector('.toast');
     this.fields = Array.from(document.querySelectorAll('input'));
+    this.search = document.querySelector('.form-secondary') as HTMLFormElement;
   }
 
   // Toggle form visibility and reset form fields
@@ -86,7 +88,6 @@ class UserView {
           toastMessage(this.toast, MESSAGE_ERROR.ACCOUNT_EXIST, 'toast__error');
         } else {
           const data = await handle(user);
-          console.log(data);
           toastMessage(
             this.toast,
             MESSAGE_SUCCESS.CREATE_SUCCESS,
@@ -217,6 +218,10 @@ class UserView {
       tableHTML += displayUser(user, index);
     });
     this.tableUser.innerHTML = tableHTML;
+  };
+
+  bindSearch = (handle: Function) => {
+    console.log(this.search);
   };
 }
 
