@@ -63,24 +63,17 @@ const validateForm = (
   const getValueInput = new FormData(dataForm);
   const arrError = errorMessages.map((spanElement) => spanElement.id);
   let isValid = true;
-  let passwordValue = '';
 
   for (const [key, value] of getValueInput.entries()) {
-    const spanId = arrError.shift() || '';
-    const valueStr = value.toString();
-
-    if (key === 'password') {
-      passwordValue = valueStr;
-    }
-
-    const errorMsg = getErrorMessage(key, valueStr, passwordValue);
-    createElement(spanId).textContent = errorMsg;
-    if (errorMsg) {
-      isValid = false;
-    }
+    const errorMessage = getErrorMessage(
+      key,
+      value.toString(),
+      localStorage.getItem('password')
+    );
+    createElement(arrError.shift()).textContent = errorMessage;
+    isValid = errorMessage ? false : true;
   }
-
   return isValid;
 };
 
-export { validationFunctions, getErrorMessage, validateForm };
+export { validateForm };

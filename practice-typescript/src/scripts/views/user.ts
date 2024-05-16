@@ -59,11 +59,16 @@ class UserView {
 
     if (target.classList.contains('btn')) {
       trimInputValues(this.form);
+
       const isValid = validateForm(this.form, this.errorMessage);
+      localStorage.setItem('password', this.form.password.value);
+
       if (!isValid) return;
 
       const formData = new FormData(this.form);
       const valueFields = Object.fromEntries(formData);
+
+      if (!isValid) return;
       const user: User = {
         email: valueFields.email as string,
         password: valueFields.password as string,
