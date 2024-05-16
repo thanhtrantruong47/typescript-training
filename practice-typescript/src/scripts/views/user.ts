@@ -195,7 +195,6 @@ class UserView {
         const data = await handle(userId);
         this.form.email.value = data.email;
         this.form.password.value = data.password;
-        this.form.repassword.value = data.password;
         this.form.fname.value = data.first_name;
         this.form.lname.value = data.last_name;
         this.form.phone.value = data.phone_number;
