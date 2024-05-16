@@ -6,4 +6,4 @@ const trimInputValues = (formElement: HTMLFormElement): void => {
   });
 };
 
-export {trimInputValues}
+export { trimInputValues };

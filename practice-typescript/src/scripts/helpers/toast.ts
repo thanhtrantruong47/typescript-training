@@ -1,4 +1,4 @@
-import { TIME_MESSAGE } from "scripts/constants/message";
+import { TIME_MESSAGE } from 'scripts/constants/message';
 
 const toastMessage = (toast: HTMLElement, message: string, status: string) => {
   toast.classList.add('toast__show');

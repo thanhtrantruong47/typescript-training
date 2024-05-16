@@ -1,5 +1,3 @@
-
-
 enum MESSAGE_ERROR {
   EMAIL = 'Please enter a valid email address',
   PASSWORD = 'Password must be at least 7 characters long',
@@ -14,9 +12,9 @@ enum MESSAGE_ERROR {
 enum MESSAGE_SUCCESS {
   CREATE_SUCCESS = 'Create success a new user',
   UPDATE_SUCCESS = 'Update success a user',
-  DELETE_SUCCESS = 'Delete success user'
+  DELETE_SUCCESS = 'Delete success user',
 }
 
-const TIME_MESSAGE = 3 * 1000
+const TIME_MESSAGE = 3 * 1000;
 
-export {  MESSAGE_ERROR, MESSAGE_SUCCESS ,TIME_MESSAGE};
+export { MESSAGE_ERROR, MESSAGE_SUCCESS, TIME_MESSAGE };

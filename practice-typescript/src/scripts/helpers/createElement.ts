@@ -3,4 +3,4 @@ const createElement = (el: string): HTMLElement => {
   return element;
 };
 
-export {createElement}
+export { createElement };

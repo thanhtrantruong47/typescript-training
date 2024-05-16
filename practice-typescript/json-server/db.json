@@ -1,12 +1,12 @@
 {
   "users": [
     {
-      "id": "e274",
       "email": "thanh@gmail.com",
       "password": "123123123",
-      "first_name": "123",
-      "last_name": "123",
-      "phone_number": "0123123123"
+      "first_name": "thanh",
+      "last_name": "tran",
+      "phone_number": "0123123123",
+      "id": "e274"
     }
   ]
 }

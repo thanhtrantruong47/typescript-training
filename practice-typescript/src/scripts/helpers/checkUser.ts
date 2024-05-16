@@ -15,4 +15,4 @@ const isUserExist = (email: string): boolean => {
   return true;
 };
 
-export {isUserExist}
+export { isUserExist };

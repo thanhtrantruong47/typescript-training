@@ -1,5 +1,4 @@
-import User from "scripts/types/user";
-
+import User from 'scripts/types/user';
 
 class UserModel {
   email: string;
