@@ -68,7 +68,6 @@ class UserView {
       const formData = new FormData(this.form);
       const valueFields = Object.fromEntries(formData);
 
-      if (!isValid) return;
       const user: User = {
         email: valueFields.email as string,
         password: valueFields.password as string,
