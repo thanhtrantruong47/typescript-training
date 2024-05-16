@@ -44,8 +44,9 @@ class UserController {
     return await this.service.getById(id);
   };
 
-  handleSearchByName = async (email: string): Promise<void> => {
+  handleSearchByName = async (email: string): Promise<any> => {
     const data = await this.service.searchUserByName(email);
+    console.log(data)
     return data;
   };
 }

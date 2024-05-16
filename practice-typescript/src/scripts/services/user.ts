@@ -9,13 +9,18 @@ class ApiService {
     this.resourceUrl = `${BASE_URL}/${USERS}`;
   }
 
-  async getAll(): Promise<UserModel[]> {
+  async getAll(): Promise<UserModel[] | null> {
     try {
       const response = await fetch(this.resourceUrl);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      return response.json();
+      const data = await response.json();
+      if (Array.isArray(data) && data.length > 0) {
+        return data;
+      } else {
+        return null;
+      }
     } catch (error: any) {
       throw new Error(`Failed to fetch data: ${error.message}`);
     }
@@ -82,7 +87,7 @@ class ApiService {
     }
   }
 
-  async searchUserByName(email: string): Promise<void> {
+  async searchUserByName(email: string): Promise<UserModel[]> {
     const url = new URL(this.resourceUrl);
     url.searchParams.append('email', email);
 
@@ -91,9 +96,10 @@ class ApiService {
         method: HTTPMethod.GET,
         headers: { 'content-type': 'application/json' },
       });
-
       if (response.ok) {
         return await response.json();
+      } else if (response.status === 404) {
+        return null;
       } else {
         throw new Error('Failed to fetch user by email');
       }

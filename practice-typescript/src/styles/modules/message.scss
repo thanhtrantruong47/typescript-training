@@ -24,3 +24,11 @@
     background-color: $bg-error;
   }
 }
+
+.emty-table {
+  padding: toRem(10px);
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
