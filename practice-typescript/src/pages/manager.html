@@ -33,16 +33,7 @@
             />
             <button class="btn-add">Add New</button>
           </form>
-          <table class="mytable">
-            <tr>
-              <td class="mytable__head mytable__head--id">#</td>
-              <td class="mytable__head">Username</td>
-              <td class="mytable__head">First Name</td>
-              <td class="mytable__head">Last Name</td>
-              <td class="mytable__head">Phone Number</td>
-              <td class="mytable__head mytable__head-action">Actions</td>
-            </tr>
-          </table>
+          <table class="table-user"></table>
         </div>
       </div>
     </section>
@@ -51,12 +42,19 @@
       <h2 class="title">Add User</h2>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email"  name="email" placeholder="Enter email" />
-        <div class="error-message" id="error_email"></div>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter email"
+          class="form-group__field"
+        />
+        <span class="form-group__error" id="error_email"></span>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
         <input
+          class="form-group__field"
           type="password"
           name="password"
           id="password"
@@ -65,18 +63,9 @@
         <span class="form-group__error" id="error_password"></span>
       </div>
       <div class="form-group">
-        <label for="re-password">Password</label>
-        <input
-          type="password"
-          name="re-password"
-          id="re-password"
-          placeholder="Enter re-password"
-        />
-        <span class="form-group__error" id="error_password"></span>
-      </div>
-      <div class="form-group">
         <label for="fname">First Name</label>
         <input
+          class="form-group__field"
           type="text"
           id="fname"
           name="first_name"
@@ -87,6 +76,7 @@
       <div class="form-group">
         <label for="lname">Last Name</label>
         <input
+          class="form-group__field"
           type="text"
           id="lname"
           name="last_name"
@@ -97,6 +87,7 @@
       <div class="form-group">
         <label for="phone">Phone Number</label>
         <input
+          class="form-group__field"
           type="tel"
           id="phone"
           name="phone"
@@ -104,8 +95,10 @@
         />
         <span class="form-group__error" id="error_phone"></span>
       </div>
-      <button type="submit" class="btn btn-update">Update</button>
+      <button type="submit" class="btn btn-update">Create User</button>
     </form>
-    <script  type="module" src="../scripts/index.ts"></script>
+    <div class="toast" id="toast">This is a simple toast message.</div>
+
+    <script type="module" src="../scripts/index.ts"></script>
   </body>
 </html>

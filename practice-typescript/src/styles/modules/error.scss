@@ -3,7 +3,14 @@
   justify-content: space-between;
   margin-bottom: toRem(3px);
 
-  &>label {
+  & > label {
     color: $color-error;
   }
+}
+
+.field-error {
+  border: toRem(2px) solid red;
+  background-image: url('../assets/images/managers/icon-error.png');
+  background-repeat: no-repeat;
+  background-position: center right toRem(16px);
 }

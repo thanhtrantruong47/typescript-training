@@ -1,0 +1,26 @@
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  font-family: $font-manager;
+
+  &__show {
+    opacity: 1;
+  }
+
+  &__success {
+    color: $message-success;
+    background-color: $bg-success;
+  }
+
+  &__error {
+    color: $message-error;
+    background-color: $bg-error;
+  }
+}
