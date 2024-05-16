@@ -54,8 +54,16 @@ const validateForm = (
 
   for (const [key, value] of getValueInput.entries()) {
     const errorMessage = getErrorMessage(key, value.toString());
-    createElement(arrError.shift()).textContent = errorMessage;
-    isValid = errorMessage ? false : true;
+    const spanElement = createElement(arrError.shift());
+    spanElement.textContent = errorMessage;
+    errorMessage
+      ? (spanElement.parentElement
+          .querySelector('input')
+          .classList.add('field-error'),
+        (isValid = false))
+      : spanElement.parentElement
+          .querySelector('input')
+          .classList.remove('field-error');
   }
   return isValid;
 };

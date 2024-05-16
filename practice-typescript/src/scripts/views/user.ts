@@ -13,6 +13,7 @@ class UserView {
   errorMessage: HTMLElement[];
   row: HTMLTableRowElement | null;
   toast: HTMLElement;
+  fields: HTMLInputElement[];
 
   constructor() {
     // Initialize DOM elements
@@ -22,6 +23,7 @@ class UserView {
     this.errorMessage = Array.from(document.querySelectorAll('span'));
     this.row = null;
     this.toast = document.querySelector('.toast');
+    this.fields = Array.from(document.querySelectorAll('input'));
   }
 
   // Toggle form visibility and reset form fields
@@ -33,6 +35,10 @@ class UserView {
     const title = this.form.querySelector('.title');
     this.errorMessage.forEach((span) => {
       span.textContent = '';
+    });
+
+    this.fields.forEach((input) => {
+      input.classList.remove('field-error');
     });
 
     if (button && title) {

@@ -5,7 +5,7 @@ enum MESSAGE_ERROR {
   LAST_NAME = 'Please enter your last name',
   PHONE_NUMBER = 'Please enter your phone format 0-xxx-xxx-xxx',
   EMPTY = '',
-  ACCOUNT_EXIST = 'Account exits',
+  ACCOUNT_EXIST = 'Username already exits',
 }
 
 enum MESSAGE_SUCCESS {

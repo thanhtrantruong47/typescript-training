@@ -1,4 +1,3 @@
-
 import UserService from 'scripts/services/user';
 import UserView from 'scripts/views/user';
 import { UserModel } from 'scripts/models/user';

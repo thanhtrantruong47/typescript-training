@@ -27,7 +27,7 @@
   text-align: left;
   font-family: $font-manager;
 
-  & > input {
+  &__field {
     height: 30px;
     width: 100%;
     border-radius: toRem(8px);
