@@ -87,9 +87,9 @@ class ApiService {
     }
   }
 
-  async searchUserByEmail(email: string): Promise<UserModel> {
+  async searchUserByName(name: string): Promise<UserModel> {
     const url = new URL(this.resourceUrl);
-    url.searchParams.append('email', email);
+    url.searchParams.append('first_name', name);
 
     try {
       const response = await fetch(url.toString(), {
