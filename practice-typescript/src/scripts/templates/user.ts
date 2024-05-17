@@ -11,6 +11,12 @@ const displayHeadTable = `
     </tr>
   `;
 
+const displayTableEmpty = (value: string) => `
+  <tr>
+    <td class="empty-table">${value}</td>
+    </tr>
+  `;
+
 const displayUser = (user: User, index: number): string => {
   const rowId = index + 1;
   localStorage.setItem('maxId', rowId.toString());
@@ -27,4 +33,4 @@ const displayUser = (user: User, index: number): string => {
           </tr>`;
 };
 
-export { displayUser, displayHeadTable };
+export { displayUser, displayHeadTable, displayTableEmpty };

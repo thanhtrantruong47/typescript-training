@@ -15,7 +15,8 @@ class ApiService {
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      return response.json();
+      const data: UserModel[] = await response.json();
+      return data;
     } catch (error: any) {
       throw new Error(`Failed to fetch data: ${error.message}`);
     }
@@ -79,6 +80,22 @@ class ApiService {
       }
     } catch (error: any) {
       throw new Error(`Failed to delete data: ${error.message}`);
+    }
+  }
+
+  async searchUserByName(name: string): Promise<UserModel[]> {
+    const url = new URL(this.resourceUrl);
+    url.searchParams.append('first_name', name);
+
+    try {
+      const response = await fetch(url.toString(), {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const data: UserModel[] = await response.json();
+      return response.status === 404 ? [] : data;
+    } catch (error: any) {
+      throw new Error(`Error occurred during user search: ${error.message}`);
     }
   }
 }

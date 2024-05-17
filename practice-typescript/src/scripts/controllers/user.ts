@@ -20,6 +20,7 @@ class UserController {
     this.view.bindEdit(this.handleEdit);
     this.view.bindToggleEdit();
     this.view.bindGetDetail(this.handleGetById);
+    this.view.bindSearch(this.handleSearchByName);
   };
 
   handleGetUsers = async (): Promise<UserModel[]> => {
@@ -27,8 +28,7 @@ class UserController {
   };
 
   handleCreate = async (data: UserModel): Promise<UserModel> => {
-    const user = await this.service.create(data);
-    return user;
+    return await this.service.create(data);
   };
 
   handleDelete = async (id: string): Promise<void> => {
@@ -41,6 +41,10 @@ class UserController {
 
   handleGetById = async (id: string): Promise<UserModel> => {
     return await this.service.getById(id);
+  };
+
+  handleSearchByName = async (name: string): Promise<UserModel[]> => {
+    return await this.service.searchUserByName(name);
   };
 }
 
