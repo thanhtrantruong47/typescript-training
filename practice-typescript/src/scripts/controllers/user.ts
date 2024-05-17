@@ -28,8 +28,7 @@ class UserController {
   };
 
   handleCreate = async (data: UserModel): Promise<UserModel> => {
-    const user = await this.service.create(data);
-    return user;
+    return await this.service.create(data);
   };
 
   handleDelete = async (id: string): Promise<void> => {
@@ -44,9 +43,8 @@ class UserController {
     return await this.service.getById(id);
   };
 
-  handleSearchByName = async (name: string): Promise<UserModel> => {
-    const data = await this.service.searchUserByName(name);
-    return data;
+  handleSearchByName = async (name: string): Promise<UserModel[]> => {
+    return await this.service.searchUserByName(name);
   };
 }
 

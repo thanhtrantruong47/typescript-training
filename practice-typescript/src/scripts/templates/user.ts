@@ -12,10 +12,10 @@ const displayHeadTable = `
   `;
 
 const displayTableEmpty = (value: string) => `
-<tr>
-  <td class="empty-table">${value}</td>
-  </tr>
-`;
+  <tr>
+    <td class="empty-table">${value}</td>
+    </tr>
+  `;
 
 const displayUser = (user: User, index: number): string => {
   const rowId = index + 1;

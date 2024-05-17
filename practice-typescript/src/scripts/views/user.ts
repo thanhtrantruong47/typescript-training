@@ -9,7 +9,7 @@ import { trimInputValues } from 'scripts/helpers/trimValue';
 import { validateForm } from 'scripts/validates/validate';
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constants/message';
 import { toastMessage } from 'scripts/helpers/toast';
-import { EMPTY_MESSAGE } from 'scripts/constants/emptyTable';
+import { NO_USERS, USER_NOT_FOUND } from 'scripts/constants/notification';
 
 class UserView {
   btn: HTMLButtonElement;
@@ -20,6 +20,7 @@ class UserView {
   toast: HTMLElement;
   fields: HTMLInputElement[];
   search: HTMLFormElement;
+  notification: HTMLElement;
 
   constructor() {
     // Initialize DOM elements
@@ -103,6 +104,9 @@ class UserView {
             data,
             Number(localStorage.getItem('maxId'))
           );
+          this.tableUser
+            .querySelector('.empty-table')!
+            .classList?.add('hidden');
         }
       } else if (buttonEdit === 'Update User' && action === 'Update User') {
         await handle(localStorage.getItem('id'), user);
@@ -192,6 +196,16 @@ class UserView {
           MESSAGE_SUCCESS.DELETE_SUCCESS,
           'toast__success'
         );
+        localStorage.setItem(
+          'maxId',
+          (parseInt(localStorage.getItem('maxId') || '0') - 1).toString()
+        );
+        if (localStorage.getItem('maxId') === '0') {
+          this.tableUser
+            .querySelector('.empty-table')!
+            .classList.remove('hidden');
+          this.tableUser.querySelector('.empty-table')!.textContent = NO_USERS;
+        }
       }
     });
   };
@@ -216,14 +230,15 @@ class UserView {
   // Bind event to display all users
   bindDisplay = async (users: Function): Promise<void> => {
     localStorage.clear();
-    const data = await users();
+    const data: User[] = await users();
     let tableHTML = displayHeadTable;
-    if (data) {
+    tableHTML += displayTableEmpty('');
+    if (data.length > 0) {
       data.forEach((user: User, index: number) => {
         tableHTML += displayUser(user, index);
       });
     } else {
-      tableHTML += displayTableEmpty(EMPTY_MESSAGE.NO_USERS);
+      tableHTML += displayTableEmpty(NO_USERS);
     }
     this.tableUser.innerHTML = tableHTML;
   };
@@ -233,15 +248,15 @@ class UserView {
       if (e.key === 'Enter') {
         e.preventDefault();
         const valueSearch = this.search.querySelector('input').value;
-        const data = await handle(valueSearch);
+        const data: User[] = await handle(valueSearch);
         let tableHTML = displayHeadTable;
-        if (data) {
+        if (data.length > 0) {
           data.forEach((user: User, index: number) => {
             tableHTML += displayUser(user, index);
           });
           this.tableUser.innerHTML = tableHTML;
         } else {
-          tableHTML += displayTableEmpty(EMPTY_MESSAGE.USER_NOT_FOUND);
+          tableHTML += displayTableEmpty(USER_NOT_FOUND);
         }
         this.tableUser.innerHTML = tableHTML;
       }

@@ -9,18 +9,14 @@ class ApiService {
     this.resourceUrl = `${BASE_URL}/${USERS}`;
   }
 
-  async getAll(): Promise<UserModel[] | null> {
+  async getAll(): Promise<UserModel[]> {
     try {
       const response = await fetch(this.resourceUrl);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
-      const data = await response.json();
-      if (Array.isArray(data) && data.length > 0) {
-        return data;
-      } else {
-        return null;
-      }
+      const data: UserModel[] = await response.json();
+      return data;
     } catch (error: any) {
       throw new Error(`Failed to fetch data: ${error.message}`);
     }
@@ -87,24 +83,19 @@ class ApiService {
     }
   }
 
-  async searchUserByName(name: string): Promise<UserModel> {
+  async searchUserByName(name: string): Promise<UserModel[]> {
     const url = new URL(this.resourceUrl);
     url.searchParams.append('first_name', name);
 
     try {
       const response = await fetch(url.toString(), {
-        method: HTTPMethod.GET,
-        headers: { 'content-type': 'application/json' },
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
       });
-      if (response.ok) {
-        return await response.json();
-      } else if (response.status === 404) {
-        return null;
-      } else {
-        throw new Error('Failed to fetch user by email');
-      }
+      const data: UserModel[] = await response.json();
+      return response.status === 404 ? [] : data;
     } catch (error: any) {
-      throw new Error(`Error occurred during user search ${error.message}`);
+      throw new Error(`Error occurred during user search: ${error.message}`);
     }
   }
 }
