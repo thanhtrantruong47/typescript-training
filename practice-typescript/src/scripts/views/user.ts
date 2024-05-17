@@ -9,7 +9,7 @@ import { trimInputValues } from 'scripts/helpers/trimValue';
 import { validateForm } from 'scripts/validates/validate';
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constants/message';
 import { toastMessage } from 'scripts/helpers/toast';
-import { EMPTY_VALUE } from 'scripts/constants/emtytable';
+import { EMPTY_MESSAGE } from 'scripts/constants/emptyTable';
 
 class UserView {
   btn: HTMLButtonElement;
@@ -105,7 +105,6 @@ class UserView {
           );
         }
       } else if (buttonEdit === 'Update User' && action === 'Update User') {
-        console.log(this.btn.textContent);
         await handle(localStorage.getItem('id'), user);
         toastMessage(
           this.toast,
@@ -224,7 +223,7 @@ class UserView {
         tableHTML += displayUser(user, index);
       });
     } else {
-      tableHTML += displayTableEmpty(EMPTY_VALUE.EMPTY_VALUE_GET_USERS);
+      tableHTML += displayTableEmpty(EMPTY_MESSAGE.NO_USERS);
     }
     this.tableUser.innerHTML = tableHTML;
   };
@@ -242,7 +241,7 @@ class UserView {
           });
           this.tableUser.innerHTML = tableHTML;
         } else {
-          tableHTML += displayTableEmpty(EMPTY_VALUE.EMPTY_VALUE_SEARCH);
+          tableHTML += displayTableEmpty(EMPTY_MESSAGE.USER_NOT_FOUND);
         }
         this.tableUser.innerHTML = tableHTML;
       }
