@@ -12,6 +12,9 @@
     color: $color-primary-manager;
     padding: toRem(11px) 0 toRem(10px) toRem(37px);
     min-height: toRem(40px);
+    position: sticky;
+    top: toRem(84px);
+    z-index: 4;
   }
 
   &__head-action {

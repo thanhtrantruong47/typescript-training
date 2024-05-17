@@ -9,6 +9,7 @@
   top: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
+  z-index: 9999;
 
   &__desc {
     font-size: toRem(23.01px);
@@ -73,6 +74,11 @@
 
 .form-secondary {
   margin-left: auto;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background-color: $color-text-secondary;
+  width: 100%;
 
   &__search {
     padding: toRem(11px) toRem(10px) toRem(10px) toRem(40px);
@@ -88,6 +94,8 @@
     color: $color-title-manager;
     max-height: toRem(40px);
     max-width: toRem(228px);
+    margin-top: toRem(23px);
     margin-right: toRem(85px);
+    float: right;
   }
 }

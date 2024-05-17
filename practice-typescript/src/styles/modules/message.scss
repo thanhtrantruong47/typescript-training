@@ -9,6 +9,7 @@
   transition: opacity 0.3s ease;
   opacity: 0;
   font-family: $font-manager;
+  z-index: 9999;
 
   &__show {
     opacity: 1;

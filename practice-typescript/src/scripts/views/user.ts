@@ -20,7 +20,6 @@ class UserView {
   toast: HTMLElement;
   fields: HTMLInputElement[];
   search: HTMLFormElement;
-  notification: HTMLElement;
 
   constructor() {
     // Initialize DOM elements
@@ -93,6 +92,7 @@ class UserView {
         if (!isUserExist(user.email)) {
           toastMessage(this.toast, MESSAGE_ERROR.ACCOUNT_EXIST, 'toast__error');
         } else {
+          this.tableUser.querySelector('.empty-table').classList.add('hidden');
           const data = await handle(user);
           toastMessage(
             this.toast,
@@ -104,9 +104,6 @@ class UserView {
             data,
             Number(localStorage.getItem('maxId'))
           );
-          this.tableUser
-            .querySelector('.empty-table')!
-            .classList?.add('hidden');
         }
       } else if (buttonEdit === 'Update User' && action === 'Update User') {
         await handle(localStorage.getItem('id'), user);
@@ -168,9 +165,9 @@ class UserView {
 
   // Bind event to add a new user
   bindAdd = async (handle: Function): Promise<void> => {
-    this.form.addEventListener('click', (e) =>
-      this.handleFormSubmit(e, 'Create User', handle)
-    );
+    this.form.addEventListener('click', async (e) => {
+      this.handleFormSubmit(e, 'Create User', handle);
+    });
   };
 
   // Bind event to edit an existing user
@@ -182,10 +179,20 @@ class UserView {
 
   // Bind event to delete a user
   bindDelete = (handle: Function): void => {
-    this.tableUser.addEventListener('click', (e) => {
+    this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
       if (target.classList.contains('action-delete')) {
+        localStorage.setItem(
+          'maxId',
+          (parseInt(localStorage.getItem('maxId') || '0') - 1).toString()
+        );
+        if (localStorage.getItem('maxId') === '0') {
+          this.tableUser
+            .querySelector('.empty-table')
+            .classList.remove('hidden');
+          this.tableUser.querySelector('.empty-table').textContent = NO_USERS;
+        }
         const userId = target.getAttribute('data-id');
         const row = target.closest('tr');
         localStorage.removeItem(`email ${userId}`);
@@ -196,16 +203,6 @@ class UserView {
           MESSAGE_SUCCESS.DELETE_SUCCESS,
           'toast__success'
         );
-        localStorage.setItem(
-          'maxId',
-          (parseInt(localStorage.getItem('maxId') || '0') - 1).toString()
-        );
-        if (localStorage.getItem('maxId') === '0') {
-          this.tableUser
-            .querySelector('.empty-table')!
-            .classList.remove('hidden');
-          this.tableUser.querySelector('.empty-table')!.textContent = NO_USERS;
-        }
       }
     });
   };
