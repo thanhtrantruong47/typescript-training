@@ -21,6 +21,7 @@ class UserView {
   toast: HTMLElement;
   fields: HTMLInputElement[];
   search: HTMLFormElement;
+  overlay: HTMLDivElement;
 
   constructor() {
     // Initialize DOM elements
@@ -32,6 +33,7 @@ class UserView {
     this.toast = document.querySelector('.toast');
     this.fields = Array.from(document.querySelectorAll('input'));
     this.search = document.querySelector('.form-secondary') as HTMLFormElement;
+    this.overlay = document.querySelector('.overlay') as HTMLDivElement;
   }
 
   // Toggle form visibility and reset form fields
@@ -57,6 +59,7 @@ class UserView {
         button.textContent = ACTION.UPDATE;
         title.textContent = ACTION.UPDATE;
       }
+      this.overlay.classList.toggle('hidden');
     }
   };
 
@@ -99,6 +102,7 @@ class UserView {
         'toast__success'
       );
       this.form.classList.toggle('hidden');
+      this.overlay.classList.toggle('hidden');
       this.tableUser.innerHTML += displayUser(
         data,
         Number(localStorage.getItem('maxId'))
@@ -111,6 +115,7 @@ class UserView {
         'toast__success'
       );
       this.form.classList.toggle('hidden');
+      this.overlay.classList.toggle('hidden');
       if (this.row) {
         this.updateUserRow(user);
       }
@@ -156,6 +161,7 @@ class UserView {
       if (target.classList.contains('btn-close')) {
         this.form.classList.toggle('hidden');
         this.form.reset();
+        this.overlay.classList.toggle('hidden');
       }
     });
   };

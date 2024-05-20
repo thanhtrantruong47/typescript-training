@@ -34,6 +34,7 @@
   height: toRem(40px);
   margin-right: toRem(26px);
   border: toRem(1.34px);
+  font-family: $font-manager;
 
   &:hover {
     background-color: $color-btn;
