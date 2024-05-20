@@ -10,6 +10,7 @@ import { validateForm } from 'scripts/validates/validate';
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constants/message';
 import { toastMessage } from 'scripts/helpers/toast';
 import { NO_USERS, USER_NOT_FOUND } from 'scripts/constants/notification';
+import { ACTION } from 'scripts/constants/action';
 
 class UserView {
   btn: HTMLButtonElement;
@@ -20,7 +21,6 @@ class UserView {
   toast: HTMLElement;
   fields: HTMLInputElement[];
   search: HTMLFormElement;
-  notification: HTMLElement;
 
   constructor() {
     // Initialize DOM elements
@@ -35,7 +35,7 @@ class UserView {
   }
 
   // Toggle form visibility and reset form fields
-  toggleForm = (action: 'add' | 'edit') => {
+  toggleForm = (action: ACTION.CREATE | ACTION.UPDATE) => {
     this.form.classList.toggle('hidden');
     this.form.reset();
 
@@ -50,12 +50,12 @@ class UserView {
     });
 
     if (button && title) {
-      if (action === 'add') {
-        button.textContent = 'Create User';
-        title.textContent = 'Add User';
+      if (action === ACTION.CREATE) {
+        button.textContent = ACTION.CREATE;
+        title.textContent = ACTION.CREATE;
       } else {
-        button.textContent = 'Update User';
-        title.textContent = 'Update User';
+        button.textContent = ACTION.UPDATE;
+        title.textContent = ACTION.UPDATE;
       }
     }
   };
@@ -63,62 +63,56 @@ class UserView {
   // Handle form submission for adding or updating users
   handleFormSubmit = async (
     e: Event,
-    action: 'Create User' | 'Update User',
+    action: ACTION.CREATE | ACTION.UPDATE,
     handle: Function
   ) => {
     e.preventDefault();
     const target = e.target as HTMLElement;
-    const buttonAdd = this.form.querySelector('.btn-update')?.textContent;
-    const buttonEdit = this.form.querySelector('.btn-update')?.textContent;
+    const buttonText = this.form.querySelector('.btn-update')?.textContent;
 
-    if (target.classList.contains('btn')) {
-      trimInputValues(this.form);
+    if (!target.classList.contains('btn')) return;
+    trimInputValues(this.form);
+    if (!validateForm(this.form, this.errorMessage)) return;
 
-      const isValid = validateForm(this.form, this.errorMessage);
+    const formData = new FormData(this.form);
+    const valueFields = Object.fromEntries(formData);
 
-      if (!isValid) return;
+    const user: User = {
+      email: valueFields.email as string,
+      password: valueFields.password as string,
+      first_name: valueFields.first_name as string,
+      last_name: valueFields.last_name as string,
+      phone_number: valueFields.phone as string,
+    };
 
-      const formData = new FormData(this.form);
-      const valueFields = Object.fromEntries(formData);
+    if (buttonText === ACTION.CREATE && action === ACTION.CREATE) {
+      if (!isUserExist(user.email)) {
+        toastMessage(this.toast, MESSAGE_ERROR.ACCOUNT_EXIST, 'toast__error');
+        return;
+      }
 
-      const user: User = {
-        email: valueFields.email as string,
-        password: valueFields.password as string,
-        first_name: valueFields.first_name as string,
-        last_name: valueFields.last_name as string,
-        phone_number: valueFields.phone as string,
-      };
-
-      if (buttonAdd === 'Create User' && action === 'Create User') {
-        if (!isUserExist(user.email)) {
-          toastMessage(this.toast, MESSAGE_ERROR.ACCOUNT_EXIST, 'toast__error');
-        } else {
-          const data = await handle(user);
-          toastMessage(
-            this.toast,
-            MESSAGE_SUCCESS.CREATE_SUCCESS,
-            'toast__success'
-          );
-          this.form.classList.toggle('hidden');
-          this.tableUser.innerHTML += displayUser(
-            data,
-            Number(localStorage.getItem('maxId'))
-          );
-          this.tableUser
-            .querySelector('.empty-table')!
-            .classList?.add('hidden');
-        }
-      } else if (buttonEdit === 'Update User' && action === 'Update User') {
-        await handle(localStorage.getItem('id'), user);
-        toastMessage(
-          this.toast,
-          MESSAGE_SUCCESS.UPDATE_SUCCESS,
-          'toast__success'
-        );
-        this.form.classList.toggle('hidden');
-        if (this.row) {
-          this.updateUserRow(user);
-        }
+      this.tableUser.querySelector('.empty-table')?.classList.add('hidden');
+      const data = await handle(user);
+      toastMessage(
+        this.toast,
+        MESSAGE_SUCCESS.CREATE_SUCCESS,
+        'toast__success'
+      );
+      this.form.classList.toggle('hidden');
+      this.tableUser.innerHTML += displayUser(
+        data,
+        Number(localStorage.getItem('maxId'))
+      );
+    } else if (buttonText === ACTION.UPDATE && action === ACTION.UPDATE) {
+      await handle(localStorage.getItem('id'), user);
+      toastMessage(
+        this.toast,
+        MESSAGE_SUCCESS.UPDATE_SUCCESS,
+        'toast__success'
+      );
+      this.form.classList.toggle('hidden');
+      if (this.row) {
+        this.updateUserRow(user);
       }
     }
   };
@@ -137,7 +131,7 @@ class UserView {
   bindToggleAddNew = (): void => {
     this.btn.addEventListener('click', (e) => {
       e.preventDefault();
-      this.toggleForm('add');
+      this.toggleForm(ACTION.CREATE);
     });
   };
 
@@ -149,7 +143,7 @@ class UserView {
       if (target.classList.contains('action-edit')) {
         this.row = target.closest('tr');
         localStorage.setItem('id', target.getAttribute('data-id'));
-        this.toggleForm('edit');
+        this.toggleForm(ACTION.UPDATE);
       }
     });
   };
@@ -168,24 +162,34 @@ class UserView {
 
   // Bind event to add a new user
   bindAdd = async (handle: Function): Promise<void> => {
-    this.form.addEventListener('click', (e) =>
-      this.handleFormSubmit(e, 'Create User', handle)
-    );
+    this.form.addEventListener('click', async (e) => {
+      this.handleFormSubmit(e, ACTION.CREATE, handle);
+    });
   };
 
   // Bind event to edit an existing user
   bindEdit = (handle: Function): void => {
     this.form.addEventListener('click', (e) =>
-      this.handleFormSubmit(e, 'Update User', handle)
+      this.handleFormSubmit(e, ACTION.UPDATE, handle)
     );
   };
 
   // Bind event to delete a user
   bindDelete = (handle: Function): void => {
-    this.tableUser.addEventListener('click', (e) => {
+    this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
       if (target.classList.contains('action-delete')) {
+        localStorage.setItem(
+          'maxId',
+          (parseInt(localStorage.getItem('maxId') || '0') - 1).toString()
+        );
+        if (localStorage.getItem('maxId') === '0') {
+          this.tableUser
+            .querySelector('.empty-table')
+            .classList.remove('hidden');
+          this.tableUser.querySelector('.empty-table').textContent = NO_USERS;
+        }
         const userId = target.getAttribute('data-id');
         const row = target.closest('tr');
         localStorage.removeItem(`email ${userId}`);
@@ -196,16 +200,6 @@ class UserView {
           MESSAGE_SUCCESS.DELETE_SUCCESS,
           'toast__success'
         );
-        localStorage.setItem(
-          'maxId',
-          (parseInt(localStorage.getItem('maxId') || '0') - 1).toString()
-        );
-        if (localStorage.getItem('maxId') === '0') {
-          this.tableUser
-            .querySelector('.empty-table')!
-            .classList.remove('hidden');
-          this.tableUser.querySelector('.empty-table')!.textContent = NO_USERS;
-        }
       }
     });
   };
