@@ -68,7 +68,6 @@ class UserView {
     e.preventDefault();
     const target = e.target as HTMLElement;
     const buttonAdd = this.form.querySelector('.btn-update')?.textContent;
-    const buttonEdit = this.form.querySelector('.btn-update')?.textContent;
 
     if (target.classList.contains('btn')) {
       trimInputValues(this.form);
@@ -106,7 +105,7 @@ class UserView {
           data,
           Number(localStorage.getItem('maxId'))
         );
-      } else if (buttonEdit === 'Update User' && action === 'Update User') {
+      } else {
         await handle(localStorage.getItem('id'), user);
         toastMessage(
           this.toast,
