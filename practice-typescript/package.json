@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "parcel --no-cache src/pages/manager.html",
-    "build": "parcel build build src/pages/manager.html"
+    "build": "parcel build src/pages/manager.html"
   },
   "dependencies": {
     "@parcel/transformer-sass": "^2.12.0",
