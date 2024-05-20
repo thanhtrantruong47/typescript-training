@@ -91,20 +91,21 @@ class UserView {
       if (buttonAdd === 'Create User' && action === 'Create User') {
         if (!isUserExist(user.email)) {
           toastMessage(this.toast, MESSAGE_ERROR.ACCOUNT_EXIST, 'toast__error');
-        } else {
-          this.tableUser.querySelector('.empty-table').classList.add('hidden');
-          const data = await handle(user);
-          toastMessage(
-            this.toast,
-            MESSAGE_SUCCESS.CREATE_SUCCESS,
-            'toast__success'
-          );
-          this.form.classList.toggle('hidden');
-          this.tableUser.innerHTML += displayUser(
-            data,
-            Number(localStorage.getItem('maxId'))
-          );
+          return;
         }
+
+        this.tableUser.querySelector('.empty-table')?.classList.add('hidden');
+        const data = await handle(user);
+        toastMessage(
+          this.toast,
+          MESSAGE_SUCCESS.CREATE_SUCCESS,
+          'toast__success'
+        );
+        this.form.classList.toggle('hidden');
+        this.tableUser.innerHTML += displayUser(
+          data,
+          Number(localStorage.getItem('maxId'))
+        );
       } else if (buttonEdit === 'Update User' && action === 'Update User') {
         await handle(localStorage.getItem('id'), user);
         toastMessage(
