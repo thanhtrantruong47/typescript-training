@@ -21,7 +21,6 @@ class UserView {
   toast: HTMLElement;
   fields: HTMLInputElement[];
   search: HTMLFormElement;
-  overlay: HTMLDivElement;
 
   constructor() {
     // Initialize DOM elements
@@ -33,7 +32,6 @@ class UserView {
     this.toast = document.querySelector('.toast');
     this.fields = Array.from(document.querySelectorAll('input'));
     this.search = document.querySelector('.form-secondary') as HTMLFormElement;
-    this.overlay = document.querySelector('.overlay') as HTMLDivElement;
   }
 
   // Toggle form visibility and reset form fields
@@ -59,7 +57,6 @@ class UserView {
         button.textContent = ACTION.UPDATE;
         title.textContent = ACTION.UPDATE;
       }
-      this.overlay.classList.toggle('hidden');
     }
   };
 
@@ -104,7 +101,6 @@ class UserView {
         'toast__success'
       );
       this.form.classList.toggle('hidden');
-      this.overlay.classList.toggle('hidden');
       this.tableUser.innerHTML += displayUser(
         data,
         Number(localStorage.getItem('maxId'))
@@ -118,7 +114,6 @@ class UserView {
         'toast__success'
       );
       this.form.classList.toggle('hidden');
-      this.overlay.classList.toggle('hidden');
       if (this.row) {
         this.updateUserRow(user);
       }
@@ -150,7 +145,7 @@ class UserView {
       const target = e.target as HTMLElement;
       if (target.classList.contains('action-edit')) {
         this.row = target.closest('tr');
-        localStorage.setItem('id', target.getAttribute('data-id') || '');
+        localStorage.setItem('id', target.getAttribute('data-id'));
         this.toggleForm(ACTION.UPDATE);
       }
     });
@@ -164,7 +159,6 @@ class UserView {
       if (target.classList.contains('btn-close')) {
         this.form.classList.toggle('hidden');
         this.form.reset();
-        this.overlay.classList.toggle('hidden');
       }
     });
   };
@@ -196,13 +190,13 @@ class UserView {
         if (localStorage.getItem('maxId') === '0') {
           this.tableUser
             .querySelector('.empty-table')
-            ?.classList.remove('hidden');
-          this.tableUser.querySelector('.empty-table')!.textContent = NO_USERS;
+            .classList.remove('hidden');
+          this.tableUser.querySelector('.empty-table').textContent = NO_USERS;
         }
-        const userId = target.getAttribute('data-id') || '';
+        const userId = target.getAttribute('data-id');
         const row = target.closest('tr');
         localStorage.removeItem(`email ${userId}`);
-        await handle(userId);
+        handle(userId);
         row?.remove();
         toastMessage(
           this.toast,
@@ -219,27 +213,13 @@ class UserView {
       e.preventDefault();
       const target = e.target as HTMLElement;
       if (target.classList.contains('action-edit')) {
-        const userId = target.getAttribute('data-id') || '';
+        const userId = target.getAttribute('data-id');
         const data = await handle(userId);
-        (
-          this.form.querySelector('input[name="email"]') as HTMLInputElement
-        ).value = data.email;
-        (
-          this.form.querySelector('input[name="password"]') as HTMLInputElement
-        ).value = data.password;
-        (
-          this.form.querySelector(
-            'input[name="first_name"]'
-          ) as HTMLInputElement
-        ).value = data.first_name;
-        (
-          this.form.querySelector('input[name="last_name"]') as HTMLInputElement
-        ).value = data.last_name;
-        (
-          this.form.querySelector(
-            'input[name="phone_number"]'
-          ) as HTMLInputElement
-        ).value = data.phone_number;
+        this.form.email.value = data.email;
+        this.form.password.value = data.password;
+        this.form.fname.value = data.first_name;
+        this.form.lname.value = data.last_name;
+        this.form.phone.value = data.phone_number;
       }
     });
   };
@@ -260,20 +240,18 @@ class UserView {
     this.tableUser.innerHTML = tableHTML;
   };
 
-  // Bind event to search users by name
   bindSearch = (handle: (searchTerm: string) => Promise<User[]>): void => {
     this.search.addEventListener('keypress', async (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        const valueSearch = (
-          this.search.querySelector('input') as HTMLInputElement
-        ).value;
+        const valueSearch = this.search.querySelector('input').value;
         const data: User[] = await handle(valueSearch);
         let tableHTML = displayHeadTable;
         if (data.length > 0) {
           data.forEach((user: User, index: number) => {
             tableHTML += displayUser(user, index);
           });
+          this.tableUser.innerHTML = tableHTML;
         } else {
           tableHTML += displayTableEmpty(USER_NOT_FOUND);
         }
