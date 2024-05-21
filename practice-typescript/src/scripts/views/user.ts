@@ -247,22 +247,19 @@ class UserView {
   };
 
   bindSearch = (handle: (searchTerm: string) => Promise<User[]>): void => {
-    this.search.addEventListener('keypress', async (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        const valueSearch = this.search.querySelector('input').value;
-        const data: User[] = await handle(valueSearch);
-        let tableHTML = displayHeadTable;
-        if (data.length > 0) {
-          data.forEach((user: User, index: number) => {
-            tableHTML += displayUser(user, index);
-          });
-          this.tableUser.innerHTML = tableHTML;
-        } else {
-          tableHTML += displayTableEmpty(USER_NOT_FOUND);
-        }
-        this.tableUser.innerHTML = tableHTML;
+    const inputField = this.search.querySelector('input') as HTMLInputElement;
+    inputField.addEventListener('input', async () => {
+      const valueSearch = inputField.value;
+      const data: User[] = await handle(valueSearch);
+      let tableHTML = displayHeadTable;
+      if (data.length > 0) {
+        data.forEach((user: User, index: number) => {
+          tableHTML += displayUser(user, index);
+        });
+      } else {
+        tableHTML += displayTableEmpty(USER_NOT_FOUND);
       }
+      this.tableUser.innerHTML = tableHTML;
     });
   };
 }
