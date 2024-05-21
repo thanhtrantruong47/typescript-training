@@ -6,7 +6,6 @@ const validationFunctions = {
     const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/i;
     return emailPattern.test(email);
   },
-  validatePassword: (password: string): boolean => password.length >= 7,
   validatePhone: (phoneNumber: string): boolean => {
     const phoneRegex = /^0\d{9}$/;
     return phoneRegex.test(phoneNumber);
@@ -14,10 +13,6 @@ const validationFunctions = {
   emailError: (email: string) =>
     !validationFunctions.validateEmail(email)
       ? MESSAGE_ERROR.EMAIL
-      : MESSAGE_ERROR.EMPTY,
-  passwordError: (password: string) =>
-    !validationFunctions.validatePassword(password)
-      ? MESSAGE_ERROR.PASSWORD
       : MESSAGE_ERROR.EMPTY,
   nameError: (name: string) =>
     !name ? MESSAGE_ERROR.FIRST_NAME : MESSAGE_ERROR.EMPTY,
@@ -31,7 +26,6 @@ const validationFunctions = {
 
 const errorFunctions: Record<string, (value: string) => string> = {
   email: validationFunctions.emailError,
-  password: validationFunctions.passwordError,
   first_name: validationFunctions.nameError,
   last_name: validationFunctions.lastNameError,
   phone: validationFunctions.phoneError,

@@ -84,7 +84,6 @@ class UserView {
 
     const user: User = {
       email: valueFields.email as string,
-      password: valueFields.password as string,
       first_name: valueFields.first_name as string,
       last_name: valueFields.last_name as string,
       phone_number: valueFields.phone as string,
@@ -222,7 +221,6 @@ class UserView {
         const userId = target.getAttribute('data-id');
         const data = await handle(userId);
         this.form.email.value = data.email;
-        this.form.password.value = data.password;
         this.form.fname.value = data.first_name;
         this.form.lname.value = data.last_name;
         this.form.phone.value = data.phone_number;
