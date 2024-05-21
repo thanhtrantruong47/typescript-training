@@ -2,7 +2,7 @@ enum MESSAGE_ERROR {
   EMAIL = 'Please enter a valid email address',
   FIRST_NAME = 'Please enter your first name',
   LAST_NAME = 'Please enter your last name',
-  PHONE_NUMBER = 'Please enter your phone format 0-xxx-xxx-xxx',
+  PHONE_NUMBER = 'Please enter your phone format 0-123-456-789',
   EMPTY = '',
   ACCOUNT_EXIST = 'Username already exits',
 }
