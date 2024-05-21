@@ -37,3 +37,39 @@
   - Search user by name
 
 ## GETTING STARTED
+
+- Step 01: Clone repository with HTTPS:
+
+```
+https://github.com/thanhtrantruong47/typescript-training.git
+```
+
+- Step 02: Move to folder which just cloned in your computer:
+
+```
+ cd typescript-training
+```
+
+- Step 03: Change to branch feature/typescript-practice:
+
+```
+git checkout typescript-practice
+```
+
+- Step 04: Next open folder
+
+```
+ cd practice-typescript
+```
+
+- Step 05: Install dependencies:
+
+```
+npm install
+```
+
+- Step 06: Finally run with:
+
+```
+npm start
+```

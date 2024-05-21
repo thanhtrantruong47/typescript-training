@@ -21,6 +21,7 @@ class UserView {
   toast: HTMLElement;
   fields: HTMLInputElement[];
   search: HTMLFormElement;
+  overlay: HTMLDivElement;
 
   constructor() {
     // Initialize DOM elements
@@ -32,6 +33,7 @@ class UserView {
     this.toast = document.querySelector('.toast');
     this.fields = Array.from(document.querySelectorAll('input'));
     this.search = document.querySelector('.form-secondary') as HTMLFormElement;
+    this.overlay = document.querySelector('.overlay') as HTMLDivElement;
   }
 
   // Toggle form visibility and reset form fields
@@ -57,15 +59,18 @@ class UserView {
         button.textContent = ACTION.UPDATE;
         title.textContent = ACTION.UPDATE;
       }
+      this.overlay.classList.toggle('hidden');
     }
   };
 
   // Handle form submission for adding or updating users
-  handleFormSubmit = async (
+  async handleFormSubmit(
     e: Event,
     action: ACTION.CREATE | ACTION.UPDATE,
-    handle: Function
-  ) => {
+    handle:
+      | ((user: User) => Promise<User>)
+      | ((id: string, user: User) => Promise<User>)
+  ) {
     e.preventDefault();
     const target = e.target as HTMLElement;
     const buttonText = this.form.querySelector('.btn-update')?.textContent;
@@ -79,7 +84,6 @@ class UserView {
 
     const user: User = {
       email: valueFields.email as string,
-      password: valueFields.password as string,
       first_name: valueFields.first_name as string,
       last_name: valueFields.last_name as string,
       phone_number: valueFields.phone as string,
@@ -92,30 +96,33 @@ class UserView {
       }
 
       this.tableUser.querySelector('.empty-table')?.classList.add('hidden');
-      const data = await handle(user);
+      const data = await (handle as (user: User) => Promise<User>)(user);
       toastMessage(
         this.toast,
         MESSAGE_SUCCESS.CREATE_SUCCESS,
         'toast__success'
       );
       this.form.classList.toggle('hidden');
+      this.overlay.classList.toggle('hidden');
       this.tableUser.innerHTML += displayUser(
         data,
         Number(localStorage.getItem('maxId'))
       );
     } else if (buttonText === ACTION.UPDATE && action === ACTION.UPDATE) {
-      await handle(localStorage.getItem('id'), user);
+      const id = localStorage.getItem('id') as string;
+      await (handle as (id: string, user: User) => Promise<User>)(id, user);
       toastMessage(
         this.toast,
         MESSAGE_SUCCESS.UPDATE_SUCCESS,
         'toast__success'
       );
       this.form.classList.toggle('hidden');
+      this.overlay.classList.toggle('hidden');
       if (this.row) {
         this.updateUserRow(user);
       }
     }
-  };
+  }
 
   // Update user details in the table row
   updateUserRow = (user: User): void => {
@@ -156,26 +163,27 @@ class UserView {
       if (target.classList.contains('btn-close')) {
         this.form.classList.toggle('hidden');
         this.form.reset();
+        this.overlay.classList.toggle('hidden');
       }
     });
   };
 
   // Bind event to add a new user
-  bindAdd = async (handle: Function): Promise<void> => {
+  bindAdd = async (handle: (user: User) => Promise<User>): Promise<void> => {
     this.form.addEventListener('click', async (e) => {
       this.handleFormSubmit(e, ACTION.CREATE, handle);
     });
   };
 
   // Bind event to edit an existing user
-  bindEdit = (handle: Function): void => {
+  bindEdit = (handle: (id: string, user: User) => Promise<User>): void => {
     this.form.addEventListener('click', (e) =>
       this.handleFormSubmit(e, ACTION.UPDATE, handle)
     );
   };
 
   // Bind event to delete a user
-  bindDelete = (handle: Function): void => {
+  bindDelete = (handle: (id: string) => Promise<void>): void => {
     this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
@@ -205,7 +213,7 @@ class UserView {
   };
 
   // Bind event to get user details for editing
-  bindGetDetail = (handle: Function): void => {
+  bindGetDetail = (handle: (id: string) => Promise<User>): void => {
     this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
@@ -213,7 +221,6 @@ class UserView {
         const userId = target.getAttribute('data-id');
         const data = await handle(userId);
         this.form.email.value = data.email;
-        this.form.password.value = data.password;
         this.form.fname.value = data.first_name;
         this.form.lname.value = data.last_name;
         this.form.phone.value = data.phone_number;
@@ -222,7 +229,7 @@ class UserView {
   };
 
   // Bind event to display all users
-  bindDisplay = async (users: Function): Promise<void> => {
+  bindDisplay = async (users: () => Promise<User[]>): Promise<void> => {
     localStorage.clear();
     const data: User[] = await users();
     let tableHTML = displayHeadTable;
@@ -237,23 +244,20 @@ class UserView {
     this.tableUser.innerHTML = tableHTML;
   };
 
-  bindSearch = (handle: Function) => {
-    this.search.addEventListener('keypress', async (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        const valueSearch = this.search.querySelector('input').value;
-        const data: User[] = await handle(valueSearch);
-        let tableHTML = displayHeadTable;
-        if (data.length > 0) {
-          data.forEach((user: User, index: number) => {
-            tableHTML += displayUser(user, index);
-          });
-          this.tableUser.innerHTML = tableHTML;
-        } else {
-          tableHTML += displayTableEmpty(USER_NOT_FOUND);
-        }
-        this.tableUser.innerHTML = tableHTML;
+  bindSearch = (handle: (searchTerm: string) => Promise<User[]>): void => {
+    const inputField = this.search.querySelector('input') as HTMLInputElement;
+    inputField.addEventListener('input', async () => {
+      const valueSearch = inputField.value;
+      const data: User[] = await handle(valueSearch);
+      let tableHTML = displayHeadTable;
+      if (data.length > 0) {
+        data.forEach((user: User, index: number) => {
+          tableHTML += displayUser(user, index);
+        });
+      } else {
+        tableHTML += displayTableEmpty(USER_NOT_FOUND);
       }
+      this.tableUser.innerHTML = tableHTML;
     });
   };
 }

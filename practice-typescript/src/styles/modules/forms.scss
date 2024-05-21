@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   padding: toRem(96px) toRem(98px);
-  font-family: $font-login;
+  font-family: $font-manager;
   text-align: center;
   max-width: toRem(760px);
   left: 50%;
@@ -82,6 +82,7 @@
   z-index: 4;
   background-color: $color-text-secondary;
   width: 100%;
+  font-family: $font-manager;
 
   padding: toRem(23px);
 
@@ -94,11 +95,21 @@
     background-repeat: no-repeat;
     background-size: toRem(17px) toRem(17px);
     background-position: center left toRem(15px);
-    font-family: $font-manager;
     font-size: toRem(16px);
     color: $color-title-manager;
     max-height: toRem(40px);
     max-width: toRem(228px);
     margin-right: toRem(85px);
+    font-family: $font-manager;
   }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $color-overlay;
+  z-index: 999;
 }

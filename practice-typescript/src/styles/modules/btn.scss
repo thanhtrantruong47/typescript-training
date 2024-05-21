@@ -24,6 +24,11 @@
   margin-left: auto;
   text-decoration: none;
   color: $color-primary;
+
+  &:hover {
+    color: $color-active-secondary;
+    text-decoration: underline;
+  }
 }
 
 .btn-add {
@@ -34,6 +39,7 @@
   height: toRem(40px);
   margin-right: toRem(26px);
   border: toRem(1.34px);
+  font-family: $font-manager;
 
   &:hover {
     background-color: $color-btn;
