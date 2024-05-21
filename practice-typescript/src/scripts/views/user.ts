@@ -64,11 +64,13 @@ class UserView {
   };
 
   // Handle form submission for adding or updating users
-  handleFormSubmit = async (
+  async handleFormSubmit(
     e: Event,
     action: ACTION.CREATE | ACTION.UPDATE,
-    handle: Function
-  ) => {
+    handle:
+      | ((user: User) => Promise<User>)
+      | ((id: string, user: User) => Promise<User>)
+  ) {
     e.preventDefault();
     const target = e.target as HTMLElement;
     const buttonText = this.form.querySelector('.btn-update')?.textContent;
@@ -95,7 +97,7 @@ class UserView {
       }
 
       this.tableUser.querySelector('.empty-table')?.classList.add('hidden');
-      const data = await handle(user);
+      const data = await (handle as (user: User) => Promise<User>)(user);
       toastMessage(
         this.toast,
         MESSAGE_SUCCESS.CREATE_SUCCESS,
@@ -108,7 +110,8 @@ class UserView {
         Number(localStorage.getItem('maxId'))
       );
     } else if (buttonText === ACTION.UPDATE && action === ACTION.UPDATE) {
-      await handle(localStorage.getItem('id'), user);
+      const id = localStorage.getItem('id') as string;
+      await (handle as (id: string, user: User) => Promise<User>)(id, user);
       toastMessage(
         this.toast,
         MESSAGE_SUCCESS.UPDATE_SUCCESS,
@@ -120,7 +123,7 @@ class UserView {
         this.updateUserRow(user);
       }
     }
-  };
+  }
 
   // Update user details in the table row
   updateUserRow = (user: User): void => {
@@ -147,7 +150,7 @@ class UserView {
       const target = e.target as HTMLElement;
       if (target.classList.contains('action-edit')) {
         this.row = target.closest('tr');
-        localStorage.setItem('id', target.getAttribute('data-id'));
+        localStorage.setItem('id', target.getAttribute('data-id') || '');
         this.toggleForm(ACTION.UPDATE);
       }
     });
@@ -167,21 +170,21 @@ class UserView {
   };
 
   // Bind event to add a new user
-  bindAdd = async (handle: Function): Promise<void> => {
+  bindAdd = async (handle: (user: User) => Promise<User>): Promise<void> => {
     this.form.addEventListener('click', async (e) => {
       this.handleFormSubmit(e, ACTION.CREATE, handle);
     });
   };
 
   // Bind event to edit an existing user
-  bindEdit = (handle: Function): void => {
+  bindEdit = (handle: (id: string, user: User) => Promise<User>): void => {
     this.form.addEventListener('click', (e) =>
       this.handleFormSubmit(e, ACTION.UPDATE, handle)
     );
   };
 
   // Bind event to delete a user
-  bindDelete = (handle: Function): void => {
+  bindDelete = (handle: (id: string) => Promise<void>): void => {
     this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
@@ -193,13 +196,13 @@ class UserView {
         if (localStorage.getItem('maxId') === '0') {
           this.tableUser
             .querySelector('.empty-table')
-            .classList.remove('hidden');
-          this.tableUser.querySelector('.empty-table').textContent = NO_USERS;
+            ?.classList.remove('hidden');
+          this.tableUser.querySelector('.empty-table')!.textContent = NO_USERS;
         }
-        const userId = target.getAttribute('data-id');
+        const userId = target.getAttribute('data-id') || '';
         const row = target.closest('tr');
         localStorage.removeItem(`email ${userId}`);
-        handle(userId);
+        await handle(userId);
         row?.remove();
         toastMessage(
           this.toast,
@@ -211,24 +214,38 @@ class UserView {
   };
 
   // Bind event to get user details for editing
-  bindGetDetail = (handle: Function): void => {
+  bindGetDetail = (handle: (id: string) => Promise<User>): void => {
     this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
       const target = e.target as HTMLElement;
       if (target.classList.contains('action-edit')) {
-        const userId = target.getAttribute('data-id');
+        const userId = target.getAttribute('data-id') || '';
         const data = await handle(userId);
-        this.form.email.value = data.email;
-        this.form.password.value = data.password;
-        this.form.fname.value = data.first_name;
-        this.form.lname.value = data.last_name;
-        this.form.phone.value = data.phone_number;
+        (
+          this.form.querySelector('input[name="email"]') as HTMLInputElement
+        ).value = data.email;
+        (
+          this.form.querySelector('input[name="password"]') as HTMLInputElement
+        ).value = data.password;
+        (
+          this.form.querySelector(
+            'input[name="first_name"]'
+          ) as HTMLInputElement
+        ).value = data.first_name;
+        (
+          this.form.querySelector('input[name="last_name"]') as HTMLInputElement
+        ).value = data.last_name;
+        (
+          this.form.querySelector(
+            'input[name="phone_number"]'
+          ) as HTMLInputElement
+        ).value = data.phone_number;
       }
     });
   };
 
   // Bind event to display all users
-  bindDisplay = async (users: Function): Promise<void> => {
+  bindDisplay = async (users: () => Promise<User[]>): Promise<void> => {
     localStorage.clear();
     const data: User[] = await users();
     let tableHTML = displayHeadTable;
@@ -243,18 +260,20 @@ class UserView {
     this.tableUser.innerHTML = tableHTML;
   };
 
-  bindSearch = (handle: Function) => {
+  // Bind event to search users by name
+  bindSearch = (handle: (searchTerm: string) => Promise<User[]>): void => {
     this.search.addEventListener('keypress', async (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        const valueSearch = this.search.querySelector('input').value;
+        const valueSearch = (
+          this.search.querySelector('input') as HTMLInputElement
+        ).value;
         const data: User[] = await handle(valueSearch);
         let tableHTML = displayHeadTable;
         if (data.length > 0) {
           data.forEach((user: User, index: number) => {
             tableHTML += displayUser(user, index);
           });
-          this.tableUser.innerHTML = tableHTML;
         } else {
           tableHTML += displayTableEmpty(USER_NOT_FOUND);
         }
