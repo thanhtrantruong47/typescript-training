@@ -1,19 +1,18 @@
 {
-  "name": "practice",
-  "version": "1.0.0",
-  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.3.0",
+    "@types/es6-promise": "^3.3.0",
+    "eslint": "^8.57.0",
+    "json-server": "^0.17.4",
+    "parcel": "^2.12.0",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.10.0",
+    "type": "module"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel --no-cache src/index.html",
     "build": "parcel build src/index.html"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^20.12.8",
-    "globals": "^15.0.0",
-    "parcel": "^2.12.0",
-    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@parcel/transformer-sass": "^2.12.0"

@@ -29,9 +29,7 @@ const validationFunctions = {
       : MESSAGE_ERROR.EMPTY,
 };
 
-const errorFunctions: {
-  [key: string]: (value: string) => string;
-} = {
+const errorFunctions: Record<string, (value: string) => string> = {
   email: validationFunctions.emailError,
   password: validationFunctions.passwordError,
   first_name: validationFunctions.nameError,

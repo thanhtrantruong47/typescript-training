@@ -17,8 +17,9 @@ class ApiService {
       }
       const data: UserModel[] = await response.json();
       return data;
-    } catch (error: any) {
-      throw new Error(`Failed to fetch data: ${error.message}`);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      throw new Error(`Failed to fetch data: ${errorMessage}`);
     }
   }
 
@@ -29,8 +30,9 @@ class ApiService {
         throw new Error('Failed to fetch data');
       }
       return response.json();
-    } catch (error: any) {
-      throw new Error(`Failed to fetch data: ${error.message}`);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      throw new Error(`Failed to fetch data: ${errorMessage}`);
     }
   }
 
@@ -47,8 +49,9 @@ class ApiService {
         throw new Error('Failed to create data');
       }
       return response.json();
-    } catch (error: any) {
-      throw new Error(`Failed to create data: ${error.message}`);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      throw new Error(`Failed to create data: ${errorMessage}`);
     }
   }
 
@@ -65,8 +68,9 @@ class ApiService {
         throw new Error('Failed to update data');
       }
       return response.json();
-    } catch (error: any) {
-      throw new Error(`Failed to update data: ${error.message}`);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      throw new Error(`Failed to update data: ${errorMessage}`);
     }
   }
 
@@ -78,8 +82,9 @@ class ApiService {
       if (!response.ok) {
         throw new Error('Failed to delete data');
       }
-    } catch (error: any) {
-      throw new Error(`Failed to delete data: ${error.message}`);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      throw new Error(`Failed to delete data: ${errorMessage}`);
     }
   }
 
@@ -94,8 +99,9 @@ class ApiService {
       });
       const data: UserModel[] = await response.json();
       return response.status === 404 ? [] : data;
-    } catch (error: any) {
-      throw new Error(`Error occurred during user search: ${error.message}`);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      throw new Error(`Error occurred during user search: ${errorMessage}`);
     }
   }
 }
