@@ -4,3 +4,4 @@ dist
 dist-ssr
 .parcel-cache
 .vercel
+.env
