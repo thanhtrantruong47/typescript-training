@@ -80,11 +80,12 @@
         <label for="phone">Phone Number</label>
         <input
           class="form-group__field"
-          type="number"
+          type="tel"
           id="phone"
           name="phone"
           placeholder="Enter phone number"
           maxlength="10"
+          pattern="\d{10}"
         />
         <span class="form-group__error" id="error_phone"></span>
       </div>
