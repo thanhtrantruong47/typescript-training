@@ -1,7 +1,9 @@
 enum MESSAGE_ERROR {
   EMAIL = 'Please enter a valid email address',
-  FIRST_NAME = 'Please enter your first name with a maximum of 20 characters',
-  LAST_NAME = 'Please enter your last name with a maximum of 20 characters',
+  FIRST_NAME = 'Please enter your first name',
+  LAST_NAME = 'Please enter your last name',
+  SPECIAL_CHARACTER = 'should not include a special character',
+  GREATER_THAN_LENGTH = 'cannot exceed 12 characters',
   PHONE_NUMBER = 'Please enter your phone format 0-123-456-789',
   EMPTY = '',
   ACCOUNT_EXIST = 'Username already exits',
