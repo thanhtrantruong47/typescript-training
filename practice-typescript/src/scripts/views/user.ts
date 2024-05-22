@@ -69,7 +69,7 @@ class UserView {
     action: ACTION.CREATE | ACTION.UPDATE,
     handle:
       | ((user: User) => Promise<User>)
-      | ((id: string, user: User) => Promise<User>)
+      | ((id: string, user: User) => Promise<void>)
   ) {
     e.preventDefault();
     const target = e.target as HTMLElement;
@@ -110,7 +110,7 @@ class UserView {
       );
     } else if (buttonText === ACTION.UPDATE && action === ACTION.UPDATE) {
       const id = localStorage.getItem('id') as string;
-      await (handle as (id: string, user: User) => Promise<User>)(id, user);
+      await (handle as (id: string, user: User) => Promise<void>)(id, user);
       toastMessage(
         this.toast,
         MESSAGE_SUCCESS.UPDATE_SUCCESS,
@@ -176,7 +176,7 @@ class UserView {
   };
 
   // Bind event to edit an existing user
-  bindEdit = (handle: (id: string, user: User) => Promise<User>): void => {
+  bindEdit = (handle: (id: string, user: User) => Promise<void>): void => {
     this.form.addEventListener('click', (e) =>
       this.handleFormSubmit(e, ACTION.UPDATE, handle)
     );
