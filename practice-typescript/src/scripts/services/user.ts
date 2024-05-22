@@ -2,7 +2,7 @@ import HTTPMethod from 'scripts/constants/HTTPMethod';
 import { USERS, BASE_URL } from 'scripts/constants/api';
 import { UserModel } from 'scripts/models/user';
 
-class ApiService {
+class UserService {
   resourceUrl: string;
 
   constructor() {
@@ -39,7 +39,7 @@ class ApiService {
   async create(data: UserModel): Promise<UserModel> {
     try {
       const response = await fetch(this.resourceUrl, {
-        method: HTTPMethod.POST,
+        method: "POST",
         headers: {
           'Content-Type': 'application/json',
         },
@@ -55,7 +55,7 @@ class ApiService {
     }
   }
 
-  async update(id: string, data: UserModel): Promise<UserModel> {
+  async update(id: string, data: UserModel): Promise<void> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`, {
         method: HTTPMethod.PUT,
@@ -106,4 +106,4 @@ class ApiService {
   }
 }
 
-export default ApiService;
+export default UserService;
