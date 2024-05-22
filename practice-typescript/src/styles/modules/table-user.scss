@@ -26,6 +26,9 @@
     padding: toRem(24px) 0 toRem(25px) toRem(37px);
     border-bottom: 1px solid $color-bg-wrapper;
     min-height: toRem(71px);
+    max-width: toRem(200px);
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__item-action {

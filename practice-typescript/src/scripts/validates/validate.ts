@@ -1,3 +1,4 @@
+import { MAX_LENGTH } from 'scripts/constants/constant';
 import { MESSAGE_ERROR } from 'scripts/constants/message';
 import { createElement } from 'scripts/helpers/createElement';
 
@@ -15,9 +16,13 @@ const validationFunctions = {
       ? MESSAGE_ERROR.EMAIL
       : MESSAGE_ERROR.EMPTY,
   nameError: (name: string) =>
-    !name ? MESSAGE_ERROR.FIRST_NAME : MESSAGE_ERROR.EMPTY,
+    !name || name.length > MAX_LENGTH
+      ? MESSAGE_ERROR.FIRST_NAME
+      : MESSAGE_ERROR.EMPTY,
   lastNameError: (name: string) =>
-    !name ? MESSAGE_ERROR.LAST_NAME : MESSAGE_ERROR.EMPTY,
+    !name || name.length > MAX_LENGTH
+      ? MESSAGE_ERROR.LAST_NAME
+      : MESSAGE_ERROR.EMPTY,
   phoneError: (phone: string) =>
     !validationFunctions.validatePhone(phone)
       ? MESSAGE_ERROR.PHONE_NUMBER
