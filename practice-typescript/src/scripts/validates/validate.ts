@@ -1,3 +1,4 @@
+import { FIRST_NAME, LAST_NAME, MAX_LENGTH } from 'scripts/constants/constant';
 import { MESSAGE_ERROR } from 'scripts/constants/message';
 import { createElement } from 'scripts/helpers/createElement';
 
@@ -10,14 +11,38 @@ const validationFunctions = {
     const phoneRegex = /^0\d{9}$/;
     return phoneRegex.test(phoneNumber);
   },
+  validateSpecialCharacter: (name: string): boolean => {
+    const pattern = /[^a-zA-Z0-9]/;
+    return pattern.test(name);
+  },
   emailError: (email: string) =>
     !validationFunctions.validateEmail(email)
       ? MESSAGE_ERROR.EMAIL
       : MESSAGE_ERROR.EMPTY,
-  nameError: (name: string) =>
-    !name ? MESSAGE_ERROR.FIRST_NAME : MESSAGE_ERROR.EMPTY,
-  lastNameError: (name: string) =>
-    !name ? MESSAGE_ERROR.LAST_NAME : MESSAGE_ERROR.EMPTY,
+  nameError(name: string) {
+    if (!name) {
+      return MESSAGE_ERROR.FIRST_NAME;
+    }
+    if (name.length > MAX_LENGTH) {
+      return FIRST_NAME + MESSAGE_ERROR.GREATER_THAN_LENGTH;
+    }
+    if (validationFunctions.validateSpecialCharacter(name)) {
+      return FIRST_NAME + MESSAGE_ERROR.SPECIAL_CHARACTER;
+    }
+    return MESSAGE_ERROR.EMPTY;
+  },
+  lastNameError(name: string) {
+    if (!name) {
+      return MESSAGE_ERROR.LAST_NAME;
+    }
+    if (name.length > MAX_LENGTH) {
+      return LAST_NAME + MESSAGE_ERROR.GREATER_THAN_LENGTH;
+    }
+    if (validationFunctions.validateSpecialCharacter(name)) {
+      return LAST_NAME + MESSAGE_ERROR.SPECIAL_CHARACTER;
+    }
+    return MESSAGE_ERROR.EMPTY;
+  },
   phoneError: (phone: string) =>
     !validationFunctions.validatePhone(phone)
       ? MESSAGE_ERROR.PHONE_NUMBER
