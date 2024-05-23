@@ -107,7 +107,7 @@ class UserService {
 
     try {
       const response = await fetch(url.toString(), {
-        method: 'GET',
+        method: HTTP_Method.GET,
         headers: { 'Content-Type': 'application/json' },
       });
       const data: UserModel[] = await response.json();
