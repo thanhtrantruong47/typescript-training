@@ -1,17 +1,23 @@
-import { HTTP_Method } from 'scripts/constants/constants';
-import { USERS, BASE_URL } from 'scripts/constants/constants';
+import { USERS, BASE_URL, HTTP_METHOD } from 'scripts/constants/user';
 import { UserModel } from 'scripts/models/user';
 
-// The UserService class provides methods to interact with the user-related API endpoints.
+/**
+ * The UserService class provides methods to interact with the user-related API endpoints.
+ */
 class UserService {
   resourceUrl: string;
 
   constructor() {
-    // Construct the base URL for the user-related API endpoints.
+    /**
+     * Constructs the base URL for the user-related API endpoints.
+     */
     this.resourceUrl = `${BASE_URL}/${USERS}`;
   }
 
-  // Fetch all users from the server.
+  /**
+   * Fetches all users from the server.
+   * @returns {Promise<UserModel[]>} A promise that resolves to an array of UserModel objects.
+   */
   async getAll(): Promise<UserModel[]> {
     try {
       const response = await fetch(this.resourceUrl);
@@ -27,7 +33,11 @@ class UserService {
     }
   }
 
-  // Fetch a single user by their ID.
+  /**
+   * Fetches a single user by their ID.
+   * @param {string} id - The ID of the user to fetch.
+   * @returns {Promise<UserModel>} A promise that resolves to a UserModel object.
+   */
   async getById(id: string): Promise<UserModel> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`);
@@ -42,11 +52,15 @@ class UserService {
     }
   }
 
-  // Create a new user.
+  /**
+   * Creates a new user.
+   * @param {UserModel} data - The user data to create.
+   * @returns {Promise<UserModel>} A promise that resolves to the created UserModel object.
+   */
   async create(data: UserModel): Promise<UserModel> {
     try {
       const response = await fetch(this.resourceUrl, {
-        method: HTTP_Method.POST,
+        method: HTTP_METHOD.POST,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -63,11 +77,16 @@ class UserService {
     }
   }
 
-  // Update an existing user by their ID.
+  /**
+   * Updates an existing user by their ID.
+   * @param {string} id - The ID of the user to update.
+   * @param {UserModel} data - The user data to update.
+   * @returns {Promise<void>} A promise that resolves when the update is complete.
+   */
   async update(id: string, data: UserModel): Promise<void> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`, {
-        method: HTTP_Method.PUT,
+        method: HTTP_METHOD.PUT,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -84,11 +103,15 @@ class UserService {
     }
   }
 
-  // Delete a user by their ID.
+  /**
+   * Deletes a user by their ID.
+   * @param {string} id - The ID of the user to delete.
+   * @returns {Promise<void>} A promise that resolves when the deletion is complete.
+   */
   async delete(id: string): Promise<void> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`, {
-        method: HTTP_Method.DELETE,
+        method: HTTP_METHOD.DELETE,
       });
       if (!response.ok) {
         throw new Error('Failed to delete data');
@@ -100,14 +123,18 @@ class UserService {
     }
   }
 
-  // Search for users by their first name.
+  /**
+   * Searches for users by their first name.
+   * @param {string} name - The first name to search for.
+   * @returns {Promise<UserModel[]>} A promise that resolves to an array of UserModel objects that match the search criteria.
+   */
   async searchUserByName(name: string): Promise<UserModel[]> {
     const url = new URL(this.resourceUrl);
     url.searchParams.append('first_name', name);
 
     try {
       const response = await fetch(url.toString(), {
-        method: HTTP_Method.GET,
+        method: HTTP_METHOD.GET,
         headers: { 'Content-Type': 'application/json' },
       });
       const data: UserModel[] = await response.json();

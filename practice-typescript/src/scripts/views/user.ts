@@ -1,16 +1,18 @@
 import User from 'scripts/types/user';
-import {
-  displayHeadTable,
-  displayTableEmpty,
-  displayUser,
-} from 'scripts/templates/user';
 import { isUserExist } from 'scripts/helpers/checkUser';
 import { trimInputValues } from 'scripts/helpers/trimValue';
 import { validateForm } from 'scripts/helpers/validate';
-import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constants/constants';
+import {
+  ACTION,
+  MESSAGE_ERROR,
+  MESSAGE_SUCCESS,
+  NO_USERS,
+  USER_NOT_FOUND,
+  displayUser,
+  displayHeadTable,
+  displayTableEmpty,
+} from 'scripts/constants/user';
 import { toastMessage } from 'scripts/helpers/toast';
-import { NO_USERS, USER_NOT_FOUND } from 'scripts/constants/constants';
-import { ACTION } from 'scripts/constants/constants';
 
 class UserView {
   btn: HTMLButtonElement;
