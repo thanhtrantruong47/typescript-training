@@ -1,16 +1,18 @@
 import User from 'scripts/types/user';
-import {
-  displayHeadTable,
-  displayTableEmpty,
-  displayUser,
-} from 'scripts/templates/user';
 import { isUserExist } from 'scripts/helpers/checkUser';
 import { trimInputValues } from 'scripts/helpers/trimValue';
-import { validateForm } from 'scripts/validates/validate';
-import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constants/message';
+import { validateForm } from 'scripts/helpers/validate';
+import {
+  ACTION,
+  MESSAGE_ERROR,
+  MESSAGE_SUCCESS,
+  NO_USERS,
+  USER_NOT_FOUND,
+  DISPLAY_USER,
+  DISPLAY_HEAD_TABLE,
+  DISPLAY_TABLE_EMPTY,
+} from 'scripts/constants/user';
 import { toastMessage } from 'scripts/helpers/toast';
-import { NO_USERS, USER_NOT_FOUND } from 'scripts/constants/notification';
-import { ACTION } from 'scripts/constants/action';
 
 class UserView {
   btn: HTMLButtonElement;
@@ -69,7 +71,7 @@ class UserView {
     action: ACTION.CREATE | ACTION.UPDATE,
     handle:
       | ((user: User) => Promise<User>)
-      | ((id: string, user: User) => Promise<User>)
+      | ((id: string, user: User) => Promise<void>)
   ) {
     e.preventDefault();
     const target = e.target as HTMLElement;
@@ -104,13 +106,13 @@ class UserView {
       );
       this.form.classList.toggle('hidden');
       this.overlay.classList.toggle('hidden');
-      this.tableUser.innerHTML += displayUser(
+      this.tableUser.innerHTML += DISPLAY_USER(
         data,
         Number(localStorage.getItem('maxId'))
       );
     } else if (buttonText === ACTION.UPDATE && action === ACTION.UPDATE) {
       const id = localStorage.getItem('id') as string;
-      await (handle as (id: string, user: User) => Promise<User>)(id, user);
+      await (handle as (id: string, user: User) => Promise<void>)(id, user);
       toastMessage(
         this.toast,
         MESSAGE_SUCCESS.UPDATE_SUCCESS,
@@ -176,7 +178,7 @@ class UserView {
   };
 
   // Bind event to edit an existing user
-  bindEdit = (handle: (id: string, user: User) => Promise<User>): void => {
+  bindEdit = (handle: (id: string, user: User) => Promise<void>): void => {
     this.form.addEventListener('click', (e) =>
       this.handleFormSubmit(e, ACTION.UPDATE, handle)
     );
@@ -232,14 +234,14 @@ class UserView {
   bindDisplay = async (users: () => Promise<User[]>): Promise<void> => {
     localStorage.clear();
     const data: User[] = await users();
-    let tableHTML = displayHeadTable;
-    tableHTML += displayTableEmpty('');
+    let tableHTML = DISPLAY_HEAD_TABLE;
+    tableHTML += DISPLAY_TABLE_EMPTY('');
     if (data.length > 0) {
       data.forEach((user: User, index: number) => {
-        tableHTML += displayUser(user, index);
+        tableHTML += DISPLAY_USER(user, index);
       });
     } else {
-      tableHTML += displayTableEmpty(NO_USERS);
+      tableHTML += DISPLAY_TABLE_EMPTY(NO_USERS);
     }
     this.tableUser.innerHTML = tableHTML;
   };
@@ -249,13 +251,13 @@ class UserView {
     inputField.addEventListener('input', async () => {
       const valueSearch = inputField.value;
       const data: User[] = await handle(valueSearch);
-      let tableHTML = displayHeadTable;
+      let tableHTML = DISPLAY_HEAD_TABLE;
       if (data.length > 0) {
         data.forEach((user: User, index: number) => {
-          tableHTML += displayUser(user, index);
+          tableHTML += DISPLAY_USER(user, index);
         });
       } else {
-        tableHTML += displayTableEmpty(USER_NOT_FOUND);
+        tableHTML += DISPLAY_TABLE_EMPTY(USER_NOT_FOUND);
       }
       this.tableUser.innerHTML = tableHTML;
     });

@@ -1,5 +1,5 @@
-import { FIRST_NAME, LAST_NAME, MAX_LENGTH } from 'scripts/constants/constant';
-import { MESSAGE_ERROR } from 'scripts/constants/message';
+import { MAX_LENGTH_FIELD } from 'scripts/constants/user';
+import { MESSAGE_ERROR } from 'scripts/constants/user';
 import { createElement } from 'scripts/helpers/createElement';
 
 const validationFunctions = {
@@ -17,29 +17,29 @@ const validationFunctions = {
   },
   emailError: (email: string) =>
     !validationFunctions.validateEmail(email)
-      ? MESSAGE_ERROR.EMAIL
+      ? MESSAGE_ERROR.EMAIL_EMPTY
       : MESSAGE_ERROR.EMPTY,
   nameError(name: string) {
     if (!name) {
-      return MESSAGE_ERROR.FIRST_NAME;
+      return MESSAGE_ERROR.EMAIL_EMPTY;
     }
-    if (name.length > MAX_LENGTH) {
-      return FIRST_NAME + MESSAGE_ERROR.GREATER_THAN_LENGTH;
+    if (name.length > MAX_LENGTH_FIELD) {
+      return 'Your first name ' + MESSAGE_ERROR.GREATER_THAN_LENGTH;
     }
     if (validationFunctions.validateSpecialCharacter(name)) {
-      return FIRST_NAME + MESSAGE_ERROR.SPECIAL_CHARACTER;
+      return 'Your first name ' + MESSAGE_ERROR.SPECIAL_CHARACTER;
     }
     return MESSAGE_ERROR.EMPTY;
   },
   lastNameError(name: string) {
     if (!name) {
-      return MESSAGE_ERROR.LAST_NAME;
+      return MESSAGE_ERROR.LAST_NAME_EMPTY;
     }
-    if (name.length > MAX_LENGTH) {
-      return LAST_NAME + MESSAGE_ERROR.GREATER_THAN_LENGTH;
+    if (name.length > MAX_LENGTH_FIELD) {
+      return 'Your last name ' + MESSAGE_ERROR.GREATER_THAN_LENGTH;
     }
     if (validationFunctions.validateSpecialCharacter(name)) {
-      return LAST_NAME + MESSAGE_ERROR.SPECIAL_CHARACTER;
+      return 'Your last name ' + MESSAGE_ERROR.SPECIAL_CHARACTER;
     }
     return MESSAGE_ERROR.EMPTY;
   },
