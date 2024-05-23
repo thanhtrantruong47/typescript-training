@@ -1,4 +1,4 @@
-import { MAX_LENGTH_NAME } from 'scripts/constants/user';
+import { MAX_LENGTH_FIELD } from 'scripts/constants/user';
 import { MESSAGE_ERROR } from 'scripts/constants/user';
 import { createElement } from 'scripts/helpers/createElement';
 
@@ -60,7 +60,7 @@ const validationFunctions = {
     if (!name) {
       return MESSAGE_ERROR.EMAIL_EMPTY;
     }
-    if (name.length > MAX_LENGTH_NAME) {
+    if (name.length > MAX_LENGTH_FIELD) {
       return 'Your first name ' + MESSAGE_ERROR.GREATER_THAN_LENGTH;
     }
     if (validationFunctions.validateSpecialCharacter(name)) {
@@ -78,7 +78,7 @@ const validationFunctions = {
     if (!name) {
       return MESSAGE_ERROR.LAST_NAME_EMPTY;
     }
-    if (name.length > MAX_LENGTH_NAME) {
+    if (name.length > MAX_LENGTH_FIELD) {
       return 'Your last name ' + MESSAGE_ERROR.GREATER_THAN_LENGTH;
     }
     if (validationFunctions.validateSpecialCharacter(name)) {
