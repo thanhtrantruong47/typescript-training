@@ -1,7 +1,7 @@
 import User from 'scripts/types/user';
 
-// Constant specifying the maximum length allowed for input fields given first and last name
-const MAX_LENGTH_NAME = 12;
+// Constant specifying the maximum length allowed for input fields given email, first and last name
+const MAX_LENGTH_FIELD = 50;
 
 const BASE_URL = 'https://6645cb84b8925626f89336b4.mockapi.io';
 const USERS = 'users';
@@ -92,7 +92,7 @@ const DISPLAY_USER = (user: User, index: number): string => {
 
 // Exporting all constants and enums so they can be used in other modules
 export {
-  MAX_LENGTH_NAME,
+  MAX_LENGTH_FIELD,
   ACTION,
   HTTP_METHOD,
   MESSAGE_ERROR,
