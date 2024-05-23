@@ -1,5 +1,10 @@
+/**
+ * Checks if a user with the given email already exists in the localStorage.
+ * @param {string} email - The email address to check.
+ * @returns {boolean} True if the user does not exist, false otherwise.
+ */
 const isUserExist = (email: string): boolean => {
-  // Retrieve all the keys from the localStorage.
+  // Retrieve all keys from the localStorage.
   const keys = Object.keys(localStorage);
   const users: string[] = [];
 

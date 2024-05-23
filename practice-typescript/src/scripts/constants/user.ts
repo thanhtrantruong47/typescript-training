@@ -25,7 +25,8 @@ const SHOW_TOAST = 'toast__show';
 
 // Enum to define various error messages that can be displayed to the user
 enum MESSAGE_ERROR {
-  EMAIL_EMPTY = 'Please enter a valid email address',
+  EMAIL_EMPTY = 'Please enter your email address',
+  EMAIL_NOT_FORMAT = 'Please enter email in correct format ex: example@gmail.com ',
   FIRST_NAME_EMPTY = 'Please enter your first name',
   LAST_NAME_EMPTY = 'Please enter your last name',
   SPECIAL_CHARACTER = 'should not include a special character',
@@ -63,14 +64,23 @@ const DISPLAY_HEAD_TABLE = `
   </tr>
 `;
 
-// Function to generate an HTML row indicating an empty table.
+/**
+ * Generates an HTML row indicating an empty table.
+ * @param value The value to display in the empty table row.
+ * @returns HTML string representing the empty table row.
+ */
 const DISPLAY_TABLE_EMPTY = (value: string) => `
   <tr>
     <td class="empty-table">${value}</td>
   </tr>
 `;
 
-// Function to generate an HTML row for a user.
+/**
+ * Generates an HTML row for displaying user data in the table.
+ * @param user The user data to display.
+ * @param index The index of the user in the table.
+ * @returns HTML string representing the user row.
+ */
 const DISPLAY_USER = (user: User, index: number): string => {
   const rowId = index + 1;
   localStorage.setItem('maxId', rowId.toString());
