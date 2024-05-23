@@ -6,11 +6,11 @@ import {
 } from 'scripts/templates/user';
 import { isUserExist } from 'scripts/helpers/checkUser';
 import { trimInputValues } from 'scripts/helpers/trimValue';
-import { validateForm } from 'scripts/validates/validate';
-import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constants/message';
+import { validateForm } from 'scripts/helpers/validate';
+import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'scripts/constants/constants';
 import { toastMessage } from 'scripts/helpers/toast';
-import { NO_USERS, USER_NOT_FOUND } from 'scripts/constants/notification';
-import { ACTION } from 'scripts/constants/action';
+import { NO_USERS, USER_NOT_FOUND } from 'scripts/constants/constants';
+import { ACTION } from 'scripts/constants/constants';
 
 class UserView {
   btn: HTMLButtonElement;

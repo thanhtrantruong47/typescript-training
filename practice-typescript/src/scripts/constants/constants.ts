@@ -1,6 +1,9 @@
 // Constant defining the maximum allowed length for certain input fields
 const MAX_LENGTH = 12;
 
+const BASE_URL = 'https://6645cb84b8925626f89336b4.mockapi.io';
+const USERS = 'users';
+
 // Constants for placeholder or label text used in user forms
 const FIRST_NAME = 'Your first name ';
 const LAST_NAME = 'Your last name ';
@@ -63,4 +66,6 @@ export {
   TIME_MESSAGE,
   USER_NOT_FOUND,
   SHOW_TOAST,
+  BASE_URL,
+  USERS,
 };

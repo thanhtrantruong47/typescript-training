@@ -1,14 +1,17 @@
-import HTTPMethod from 'scripts/constants/HTTPMethod';
-import { USERS, BASE_URL } from 'scripts/constants/api';
+import { HTTP_Method } from 'scripts/constants/constants';
+import { USERS, BASE_URL } from 'scripts/constants/constants';
 import { UserModel } from 'scripts/models/user';
 
+// The UserService class provides methods to interact with the user-related API endpoints.
 class UserService {
   resourceUrl: string;
 
   constructor() {
+    // Construct the base URL for the user-related API endpoints.
     this.resourceUrl = `${BASE_URL}/${USERS}`;
   }
 
+  // Fetch all users from the server.
   async getAll(): Promise<UserModel[]> {
     try {
       const response = await fetch(this.resourceUrl);
@@ -18,11 +21,13 @@ class UserService {
       const data: UserModel[] = await response.json();
       return data;
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       throw new Error(`Failed to fetch data: ${errorMessage}`);
     }
   }
 
+  // Fetch a single user by their ID.
   async getById(id: string): Promise<UserModel> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`);
@@ -31,15 +36,17 @@ class UserService {
       }
       return response.json();
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       throw new Error(`Failed to fetch data: ${errorMessage}`);
     }
   }
 
+  // Create a new user.
   async create(data: UserModel): Promise<UserModel> {
     try {
       const response = await fetch(this.resourceUrl, {
-        method: "POST",
+        method: HTTP_Method.POST,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -50,15 +57,17 @@ class UserService {
       }
       return response.json();
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       throw new Error(`Failed to create data: ${errorMessage}`);
     }
   }
 
+  // Update an existing user by their ID.
   async update(id: string, data: UserModel): Promise<void> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`, {
-        method: HTTPMethod.PUT,
+        method: HTTP_Method.PUT,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -69,25 +78,29 @@ class UserService {
       }
       return response.json();
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       throw new Error(`Failed to update data: ${errorMessage}`);
     }
   }
 
+  // Delete a user by their ID.
   async delete(id: string): Promise<void> {
     try {
       const response = await fetch(`${this.resourceUrl}/${id}`, {
-        method: HTTPMethod.DELETE,
+        method: HTTP_Method.DELETE,
       });
       if (!response.ok) {
         throw new Error('Failed to delete data');
       }
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       throw new Error(`Failed to delete data: ${errorMessage}`);
     }
   }
 
+  // Search for users by their first name.
   async searchUserByName(name: string): Promise<UserModel[]> {
     const url = new URL(this.resourceUrl);
     url.searchParams.append('first_name', name);
@@ -100,7 +113,8 @@ class UserService {
       const data: UserModel[] = await response.json();
       return response.status === 404 ? [] : data;
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
       throw new Error(`Error occurred during user search: ${errorMessage}`);
     }
   }
