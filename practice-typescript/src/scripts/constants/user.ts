@@ -71,7 +71,7 @@ const DISPLAY_HEAD_TABLE = `
  */
 const DISPLAY_TABLE_EMPTY = (value: string) => `
   <tr>
-    <td class="empty-table">${value}</td>
+    <td class="empty-table hidden">${value}</td>
   </tr>
 `;
 
