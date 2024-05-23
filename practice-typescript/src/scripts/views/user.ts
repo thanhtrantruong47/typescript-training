@@ -108,7 +108,10 @@ class UserView {
         return;
       }
 
-      this.tableUser.querySelector('.empty-table')?.classList.add('hidden');
+      !this.tableUser
+        .querySelector('.empty-table')
+        .classList.contains('hidden') &&
+        this.tableUser.querySelector('.empty-table').classList.add('hidden');
       const data = await (handle as (user: User) => Promise<User>)(user);
       toastMessage(
         this.toast,
@@ -223,11 +226,11 @@ class UserView {
           'maxId',
           (parseInt(localStorage.getItem('maxId') || '0') - 1).toString()
         );
-        if (localStorage.getItem('maxId') === '0') {
+        const maxId = localStorage.getItem('maxId');
+        if (maxId === '0') {
           this.tableUser
             .querySelector('.empty-table')
             .classList.remove('hidden');
-          this.tableUser.querySelector('.empty-table').textContent = NO_USERS;
         }
         const userId = target.getAttribute('data-id');
         const row = target.closest('tr');
@@ -263,22 +266,36 @@ class UserView {
   };
 
   /**
+   * Updates the table with user data.
+   * @param {User[]} data - The array of user data.
+   * @param {string} emptyMessage - The message to display when the table is empty.
+   */
+  bindUpdateTable = (data: User[], emptyMessage: string): void => {
+    let tableHTML = DISPLAY_HEAD_TABLE;
+    tableHTML += DISPLAY_TABLE_EMPTY(emptyMessage);
+
+    if (data.length > 0) {
+      data.forEach((user: User, index: number) => {
+        tableHTML += DISPLAY_USER(user, index);
+      });
+      this.tableUser.innerHTML = tableHTML;
+    } else {
+      this.tableUser.innerHTML = tableHTML;
+      const emptyTableElement = this.tableUser.querySelector('.empty-table');
+      if (emptyTableElement && data.length === 0) {
+        emptyTableElement.classList.remove('hidden');
+      }
+    }
+  };
+
+  /**
    * Binds an event to display all users.
    * @param {() => Promise<User[]>} users - The function to retrieve all users.
    */
   bindDisplay = async (users: () => Promise<User[]>): Promise<void> => {
     localStorage.clear();
     const data: User[] = await users();
-    let tableHTML = DISPLAY_HEAD_TABLE;
-    tableHTML += DISPLAY_TABLE_EMPTY('');
-    if (data.length > 0) {
-      data.forEach((user: User, index: number) => {
-        tableHTML += DISPLAY_USER(user, index);
-      });
-    } else {
-      tableHTML += DISPLAY_TABLE_EMPTY(NO_USERS);
-    }
-    this.tableUser.innerHTML = tableHTML;
+    this.bindUpdateTable(data, NO_USERS);
   };
 
   /**
@@ -290,15 +307,7 @@ class UserView {
     inputField.addEventListener('input', async () => {
       const valueSearch = inputField.value;
       const data: User[] = await handle(valueSearch);
-      let tableHTML = DISPLAY_HEAD_TABLE;
-      if (data.length > 0) {
-        data.forEach((user: User, index: number) => {
-          tableHTML += DISPLAY_USER(user, index);
-        });
-      } else {
-        tableHTML += DISPLAY_TABLE_EMPTY(USER_NOT_FOUND);
-      }
-      this.tableUser.innerHTML = tableHTML;
+      this.bindUpdateTable(data, USER_NOT_FOUND);
     });
   };
 }
