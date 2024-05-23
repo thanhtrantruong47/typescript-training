@@ -14,6 +14,9 @@ import {
 } from 'scripts/constants/user';
 import { toastMessage } from 'scripts/helpers/toast';
 
+/**
+ * The UserView class manages the user interface interactions for user-related operations.
+ */
 class UserView {
   btn: HTMLButtonElement;
   form: HTMLFormElement;
@@ -38,7 +41,10 @@ class UserView {
     this.overlay = document.querySelector('.overlay') as HTMLDivElement;
   }
 
-  // Toggle form visibility and reset form fields
+  /**
+   * Toggles the visibility of the form and resets form fields.
+   * @param {ACTION.CREATE | ACTION.UPDATE} action - The action type: create or update.
+   */
   toggleForm = (action: ACTION.CREATE | ACTION.UPDATE) => {
     this.form.classList.toggle('hidden');
     this.form.reset();
@@ -65,7 +71,12 @@ class UserView {
     }
   };
 
-  // Handle form submission for adding or updating users
+  /**
+   * Handles form submission for adding or updating users.
+   * @param {Event} e - The form submission event.
+   * @param {ACTION.CREATE | ACTION.UPDATE} action - The action type: create or update.
+   * @param {((user: User) => Promise<User>) | ((id: string, user: User) => Promise<void>)} handle - The handler function for the action.
+   */
   async handleFormSubmit(
     e: Event,
     action: ACTION.CREATE | ACTION.UPDATE,
@@ -126,7 +137,10 @@ class UserView {
     }
   }
 
-  // Update user details in the table row
+  /**
+   * Updates user details in the table row.
+   * @param {User} user - The updated user data.
+   */
   updateUserRow = (user: User): void => {
     if (this.row) {
       this.row.querySelector('.firstName-content')!.textContent =
@@ -136,7 +150,9 @@ class UserView {
     }
   };
 
-  // Bind event to toggle add new user form
+  /**
+   * Binds an event to toggle the add new user form.
+   */
   bindToggleAddNew = (): void => {
     this.btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -144,7 +160,9 @@ class UserView {
     });
   };
 
-  // Bind event to toggle edit user form
+  /**
+   * Binds an event to toggle the edit user form.
+   */
   bindToggleEdit = (): void => {
     this.tableUser.addEventListener('click', (e) => {
       e.preventDefault();
@@ -157,7 +175,9 @@ class UserView {
     });
   };
 
-  // Bind event to close the form
+  /**
+   * Binds an event to close the form.
+   */
   bindCloseForm = (): void => {
     this.form.addEventListener('click', (e) => {
       e.preventDefault();
@@ -170,21 +190,30 @@ class UserView {
     });
   };
 
-  // Bind event to add a new user
+  /**
+   * Binds an event to add a new user.
+   * @param {(user: User) => Promise<User>} handle - The handler function for adding a new user.
+   */
   bindAdd = async (handle: (user: User) => Promise<User>): Promise<void> => {
     this.form.addEventListener('click', async (e) => {
       this.handleFormSubmit(e, ACTION.CREATE, handle);
     });
   };
 
-  // Bind event to edit an existing user
+  /**
+   * Binds an event to edit an existing user.
+   * @param {(id: string, user: User) => Promise<void>} handle - The handler function for editing an existing user.
+   */
   bindEdit = (handle: (id: string, user: User) => Promise<void>): void => {
     this.form.addEventListener('click', (e) =>
       this.handleFormSubmit(e, ACTION.UPDATE, handle)
     );
   };
 
-  // Bind event to delete a user
+  /**
+   * Binds an event to delete a user.
+   * @param {(id: string) => Promise<void>} handle - The handler function for deleting a user.
+   */
   bindDelete = (handle: (id: string) => Promise<void>): void => {
     this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
@@ -214,7 +243,10 @@ class UserView {
     });
   };
 
-  // Bind event to get user details for editing
+  /**
+   * Binds an event to get user details for editing.
+   * @param {(id: string) => Promise<User>} handle - The handler function for getting user details.
+   */
   bindGetDetail = (handle: (id: string) => Promise<User>): void => {
     this.tableUser.addEventListener('click', async (e) => {
       e.preventDefault();
@@ -230,7 +262,10 @@ class UserView {
     });
   };
 
-  // Bind event to display all users
+  /**
+   * Binds an event to display all users.
+   * @param {() => Promise<User[]>} users - The function to retrieve all users.
+   */
   bindDisplay = async (users: () => Promise<User[]>): Promise<void> => {
     localStorage.clear();
     const data: User[] = await users();
@@ -246,6 +281,10 @@ class UserView {
     this.tableUser.innerHTML = tableHTML;
   };
 
+  /**
+   * Binds an event to search for users.
+   * @param {(searchTerm: string) => Promise<User[]>} handle - The handler function for searching users.
+   */
   bindSearch = (handle: (searchTerm: string) => Promise<User[]>): void => {
     const inputField = this.search.querySelector('input') as HTMLInputElement;
     inputField.addEventListener('input', async () => {

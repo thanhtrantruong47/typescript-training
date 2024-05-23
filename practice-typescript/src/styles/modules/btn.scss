@@ -17,6 +17,7 @@
   &:hover {
     background-color: $color-btn;
     color: $color-primary;
+    cursor: pointer;
   }
 }
 
@@ -28,6 +29,7 @@
   &:hover {
     color: $color-active-secondary;
     text-decoration: underline;
+    cursor: pointer;
   }
 }
 
@@ -44,5 +46,6 @@
   &:hover {
     background-color: $color-btn;
     color: $color-primary;
+    cursor: pointer;
   }
 }
