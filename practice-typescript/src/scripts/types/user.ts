@@ -1,3 +1,6 @@
+/**
+ * Defines the structure of a user object.
+ */
 interface User {
   email: string;
   first_name: string;
