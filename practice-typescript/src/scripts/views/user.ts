@@ -8,9 +8,9 @@ import {
   MESSAGE_SUCCESS,
   NO_USERS,
   USER_NOT_FOUND,
-  displayUser,
-  displayHeadTable,
-  displayTableEmpty,
+  DISPLAY_USER,
+  DISPLAY_HEAD_TABLE,
+  DISPLAY_TABLE_EMPTY,
 } from 'scripts/constants/user';
 import { toastMessage } from 'scripts/helpers/toast';
 
@@ -106,7 +106,7 @@ class UserView {
       );
       this.form.classList.toggle('hidden');
       this.overlay.classList.toggle('hidden');
-      this.tableUser.innerHTML += displayUser(
+      this.tableUser.innerHTML += DISPLAY_USER(
         data,
         Number(localStorage.getItem('maxId'))
       );
@@ -234,14 +234,14 @@ class UserView {
   bindDisplay = async (users: () => Promise<User[]>): Promise<void> => {
     localStorage.clear();
     const data: User[] = await users();
-    let tableHTML = displayHeadTable;
-    tableHTML += displayTableEmpty('');
+    let tableHTML = DISPLAY_HEAD_TABLE;
+    tableHTML += DISPLAY_TABLE_EMPTY('');
     if (data.length > 0) {
       data.forEach((user: User, index: number) => {
-        tableHTML += displayUser(user, index);
+        tableHTML += DISPLAY_USER(user, index);
       });
     } else {
-      tableHTML += displayTableEmpty(NO_USERS);
+      tableHTML += DISPLAY_TABLE_EMPTY(NO_USERS);
     }
     this.tableUser.innerHTML = tableHTML;
   };
@@ -251,13 +251,13 @@ class UserView {
     inputField.addEventListener('input', async () => {
       const valueSearch = inputField.value;
       const data: User[] = await handle(valueSearch);
-      let tableHTML = displayHeadTable;
+      let tableHTML = DISPLAY_HEAD_TABLE;
       if (data.length > 0) {
         data.forEach((user: User, index: number) => {
-          tableHTML += displayUser(user, index);
+          tableHTML += DISPLAY_USER(user, index);
         });
       } else {
-        tableHTML += displayTableEmpty(USER_NOT_FOUND);
+        tableHTML += DISPLAY_TABLE_EMPTY(USER_NOT_FOUND);
       }
       this.tableUser.innerHTML = tableHTML;
     });

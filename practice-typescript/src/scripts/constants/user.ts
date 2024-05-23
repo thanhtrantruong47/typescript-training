@@ -52,7 +52,7 @@ const NO_USERS = 'There is no data to display';
 const USER_NOT_FOUND = 'User was not found according to search data';
 
 // HTML string for the header row of the user table.
-const displayHeadTable = `
+const DISPLAY_HEAD_TABLE = `
   <tr>
     <td class="table-user__head table-user__head--id">#</td>
     <td class="table-user__head">Username</td>
@@ -64,14 +64,14 @@ const displayHeadTable = `
 `;
 
 // Function to generate an HTML row indicating an empty table.
-const displayTableEmpty = (value: string) => `
+const DISPLAY_TABLE_EMPTY = (value: string) => `
   <tr>
     <td class="empty-table">${value}</td>
   </tr>
 `;
 
 // Function to generate an HTML row for a user.
-const displayUser = (user: User, index: number): string => {
+const DISPLAY_USER = (user: User, index: number): string => {
   const rowId = index + 1;
   localStorage.setItem('maxId', rowId.toString());
   localStorage.setItem(`email ${user.id}`, user.email.toString());
@@ -103,7 +103,7 @@ export {
   SHOW_TOAST,
   BASE_URL,
   USERS,
-  displayUser,
-  displayHeadTable,
-  displayTableEmpty,
+  DISPLAY_USER,
+  DISPLAY_HEAD_TABLE,
+  DISPLAY_TABLE_EMPTY,
 };
