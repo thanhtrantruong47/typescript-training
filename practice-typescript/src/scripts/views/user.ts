@@ -230,7 +230,6 @@ class UserView {
 
         this.bindConfirmation().then((confirmation) => {
           if (confirmation) {
-            localStorage.removeItem('confirmation');
             const row = target.closest('tr');
             localStorage.removeItem(`email ${userId}`);
             handle(userId);
@@ -309,11 +308,9 @@ class UserView {
         e.preventDefault();
         const target = e.target as HTMLElement;
         if (target.classList.contains('btn-confirmation--delete')) {
-          localStorage.setItem('confirmation', 'true');
           this.hideConfirmation();
           resolve(true);
         } else if (target.classList.contains('btn-confirmation--cancel')) {
-          localStorage.setItem('confirmation', 'false');
           this.hideConfirmation();
           resolve(false);
         }
