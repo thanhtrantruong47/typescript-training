@@ -31,7 +31,7 @@ class UserView {
 
   constructor() {
     // Initialize DOM elements
-    this.btn = document.querySelector('.btn-add') as HTMLButtonElement;
+    this.btn = document.querySelector('.btn__add') as HTMLButtonElement;
     this.form = document.querySelector('.form-primary') as HTMLFormElement;
     this.tableUser = document.querySelector('.table-user') as HTMLTableElement;
     this.errorMessage = Array.from(document.querySelectorAll('span'));
@@ -88,7 +88,7 @@ class UserView {
   ) {
     e.preventDefault();
     const target = e.target as HTMLElement;
-    const buttonText = this.form.querySelector('.btn-update')?.textContent;
+    const buttonText = this.form.querySelector('.btn__primary')?.textContent;
 
     if (!target.classList.contains('btn')) return;
     trimInputValues(this.form);
@@ -187,7 +187,7 @@ class UserView {
     this.form.addEventListener('click', (e) => {
       e.preventDefault();
       const target = e.target as HTMLButtonElement;
-      if (target.classList.contains('btn-close')) {
+      if (target.classList.contains('btn__close')) {
         this.form.classList.toggle('hidden');
         this.form.reset();
         this.overlay.classList.toggle('hidden');
@@ -224,7 +224,7 @@ class UserView {
       e.preventDefault();
       const target = e.target as HTMLElement;
       if (target.classList.contains('action-delete')) {
-        this.confirmation.classList.remove('confirmation--hidden');
+        this.confirmation.classList.remove('hidden');
         this.overlay.classList.remove('hidden');
         const userId = target.getAttribute('data-id');
 
@@ -307,10 +307,10 @@ class UserView {
       this.confirmation.addEventListener('click', (e) => {
         e.preventDefault();
         const target = e.target as HTMLElement;
-        if (target.classList.contains('btn-confirmation--remove')) {
+        if (target.classList.contains('btn__confirmation--remove')) {
           this.hideConfirmation();
           resolve(true);
-        } else if (target.classList.contains('btn-confirmation--neutral')) {
+        } else if (target.classList.contains('btn__confirmation--neutral')) {
           this.hideConfirmation();
           resolve(false);
         }
@@ -322,8 +322,8 @@ class UserView {
    * Hides the confirmation dialog and overlay.
    */
   hideConfirmation(): void {
-    if (!this.confirmation.classList.contains('confirmation--hidden')) {
-      this.confirmation.classList.add('confirmation--hidden');
+    if (!this.confirmation.classList.contains('hidden')) {
+      this.confirmation.classList.add('hidden');
     }
     if (!this.overlay.classList.contains('hidden')) {
       this.overlay.classList.add('hidden');

@@ -32,7 +32,7 @@
               maxlength="12"
               placeholder="Search List..."
             />
-            <button class="btn-add">Add New</button>
+            <button class="btn btn__add">Add New</button>
           </form>
           <table class="table-user"></table>
         </div>
@@ -40,7 +40,7 @@
     </section>
     <div class="overlay hidden"></div>
     <form class="form-primary form-update hidden" action="">
-      <a href="javascript:void(0)" class="btn-close">Close</a>
+      <a href="javascript:void(0)" class="btn btn__close">Close</a>
       <h2 class="title">Add User</h2>
       <div class="form-group">
         <label for="email">Email</label>
@@ -88,19 +88,17 @@
         />
         <span class="form-group__error" id="error_phone"></span>
       </div>
-      <button type="submit" class="btn btn-update">Create User</button>
+      <button type="submit" class="btn btn__primary">Create User</button>
     </form>
     <div class="toast" id="toast">This is a simple toast message.</div>
-    <div class="confirmation confirmation--hidden">
+    <div class="confirmation hidden">
       <p class="confirmation__title">Are You Sure?</p>
-      <p class="confirmation__desc">
-        You won't be able to revert this.
-      </p>
+      <p class="confirmation__desc">You won't be able to revert this.</p>
       <div class="confirmation__btn">
-        <button class="btn-confirmation btn-confirmation--remove">
+        <button class="btn btn__confirmation btn__confirmation--remove">
           Yes, delete it!
         </button>
-        <button class="btn-confirmation btn-confirmation--neutral">
+        <button class="btn btn__confirmation btn__confirmation--neutral">
           Cancel
         </button>
       </div>

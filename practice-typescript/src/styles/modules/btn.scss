@@ -1,75 +1,71 @@
 .btn {
-  margin: toRem(10px) auto 0;
   font-family: $font-manager;
-  font-size: toRem(34px);
-  font-weight: 700;
-  line-height: toRem(44px);
   letter-spacing: 0em;
-  text-align: center;
-  padding: toRem(23px) 0;
-  width: 100%;
   border-radius: toRem(23px);
-  background-color: rgba(122, 92, 250, 1);
   color: $color-text-secondary;
   border: toRem(1.34px);
-  max-width: toRem(391px);
 
   &:hover {
     background-color: $color-btn;
     color: $color-primary;
     cursor: pointer;
   }
-}
 
-.btn-close {
-  margin-left: auto;
-  text-decoration: none;
-  color: $color-primary;
-
-  &:hover {
-    color: $color-active-secondary;
-    text-decoration: underline;
-    cursor: pointer;
+  &__primary {
+    margin: toRem(10px) auto 0;
+    font-size: toRem(34px);
+    font-weight: 700;
+    padding: toRem(23px) 0;
+    width: 100%;
+    border-radius: toRem(23px);
+    background-color: rgba(122, 92, 250, 1);
+    max-width: toRem(391px);
   }
-}
 
-.btn-add {
-  border-radius: toRem(4px);
-  background-color: $color-btn-in;
-  color: $color-text-secondary;
-  width: toRem(90px);
-  height: toRem(40px);
-  margin-right: toRem(26px);
-  border: toRem(1.34px);
-  font-family: $font-manager;
-
-  &:hover {
-    background-color: $color-btn;
+  &__close {
+    margin-left: 100%;
+    text-decoration: none;
     color: $color-primary;
-    cursor: pointer;
-  }
-}
-
-.btn-confirmation {
-  padding: toRem(15px);
-  border: toRem(1.34px);
-  border-radius: toRem(8px);
-  font-size: toRem(23px);
-  font-family: $font-manager;
-
-  &--remove {
-    background-color: $product-color;
 
     &:hover {
-      background-color: $color-active-secondary;
+      color: $color-active-secondary;
+      text-decoration: underline;
     }
   }
 
-  &--neutral {
-    background-color: $color-primary-manager;
+  &__add {
+    border-radius: toRem(4px);
+    background-color: $color-btn-in;
+    color: $color-text-secondary;
+    width: toRem(90px);
+    height: toRem(40px);
+    margin-right: toRem(26px);
 
     &:hover {
-      background-color: $color-title-manager;
+      background-color: $color-btn;
+      color: $color-primary;
+    }
+  }
+
+  &__confirmation {
+    padding: toRem(15px);
+    border-radius: toRem(8px);
+    font-size: toRem(23px);
+
+    &--remove {
+      background-color: $product-color;
+
+      &:hover {
+        background-color: $color-active-secondary;
+      }
+    }
+
+    &--neutral {
+      background-color: $color-primary-manager;
+
+      &:hover {
+        background-color: $color-title-manager;
+      }
     }
   }
 }
