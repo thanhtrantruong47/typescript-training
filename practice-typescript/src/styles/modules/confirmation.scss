@@ -6,9 +6,9 @@
   align-items: center;
   position: absolute;
   transform: translate(-50%, -50%);
-  height: 300px;
+  height: toRem(300px);
   font-family: $font-manager;
-  padding: 30px;
+  padding: toRem(30px);
   z-index: 9999;
   font-size: toRem(23.01px);
   background-color: $bg-form;
@@ -24,7 +24,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    gap: 30px;
+    gap: toRem(30px);
   }
 
   &__hidden {
