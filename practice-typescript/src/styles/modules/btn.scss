@@ -1,6 +1,6 @@
 .btn {
   margin: toRem(10px) auto 0;
-  font-family: $font-login;
+  font-family: $font-manager;
   font-size: toRem(34px);
   font-weight: 700;
   line-height: toRem(44px);
@@ -50,12 +50,12 @@
   }
 }
 
-
 .btn-confirmation {
   padding: 10px 30px;
-  width: 123px;
   border: 1.34px;
   border-radius: 8px;
+  font-size: 23px;
+  font-family: $font-manager;
 
   &--delete {
     background-color: $product-color;

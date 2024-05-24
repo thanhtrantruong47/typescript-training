@@ -6,18 +6,18 @@
   align-items: center;
   position: absolute;
   transform: translate(-50%, -50%);
-  width: 400px;
   height: 300px;
   font-family: $font-manager;
-  color: $color-text-primary;
-  font-weight: 400;
   padding: 30px;
   z-index: 9999;
-  background-color: aliceblue;
+  font-size: toRem(23.01px);
+  background-color: $bg-form;
 
   &__desc {
     width: 100%;
     text-align: center;
+    color: $color-login;
+    color: $color-text-primary;
   }
 
   &__btn {
