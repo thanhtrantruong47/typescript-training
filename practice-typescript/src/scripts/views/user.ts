@@ -307,10 +307,10 @@ class UserView {
       this.confirmation.addEventListener('click', (e) => {
         e.preventDefault();
         const target = e.target as HTMLElement;
-        if (target.classList.contains('btn-confirmation--delete')) {
+        if (target.classList.contains('btn-confirmation--remove')) {
           this.hideConfirmation();
           resolve(true);
-        } else if (target.classList.contains('btn-confirmation--cancel')) {
+        } else if (target.classList.contains('btn-confirmation--neutral')) {
           this.hideConfirmation();
           resolve(false);
         }

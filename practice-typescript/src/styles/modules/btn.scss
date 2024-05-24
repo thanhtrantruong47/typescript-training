@@ -57,7 +57,7 @@
   font-size: toRem(23px);
   font-family: $font-manager;
 
-  &--delete {
+  &--remove {
     background-color: $product-color;
 
     &:hover {
@@ -65,7 +65,7 @@
     }
   }
 
-  &--cancel {
+  &--neutral {
     background-color: $color-primary-manager;
 
     &:hover {
