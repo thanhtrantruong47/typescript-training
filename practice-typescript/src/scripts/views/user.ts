@@ -27,10 +27,11 @@ class UserView {
   fields: HTMLInputElement[];
   search: HTMLFormElement;
   overlay: HTMLDivElement;
+  confirmation: HTMLElement;
 
   constructor() {
     // Initialize DOM elements
-    this.btn = document.querySelector('.btn-add') as HTMLButtonElement;
+    this.btn = document.querySelector('.btn__add') as HTMLButtonElement;
     this.form = document.querySelector('.form-primary') as HTMLFormElement;
     this.tableUser = document.querySelector('.table-user') as HTMLTableElement;
     this.errorMessage = Array.from(document.querySelectorAll('span'));
@@ -39,6 +40,7 @@ class UserView {
     this.fields = Array.from(document.querySelectorAll('input'));
     this.search = document.querySelector('.form-secondary') as HTMLFormElement;
     this.overlay = document.querySelector('.overlay') as HTMLDivElement;
+    this.confirmation = document.querySelector('.confirmation') as HTMLElement;
   }
 
   /**
@@ -86,7 +88,7 @@ class UserView {
   ) {
     e.preventDefault();
     const target = e.target as HTMLElement;
-    const buttonText = this.form.querySelector('.btn-update')?.textContent;
+    const buttonText = this.form.querySelector('.btn__primary')?.textContent;
 
     if (!target.classList.contains('btn')) return;
     trimInputValues(this.form);
@@ -185,7 +187,7 @@ class UserView {
     this.form.addEventListener('click', (e) => {
       e.preventDefault();
       const target = e.target as HTMLButtonElement;
-      if (target.classList.contains('btn-close')) {
+      if (target.classList.contains('btn__close')) {
         this.form.classList.toggle('hidden');
         this.form.reset();
         this.overlay.classList.toggle('hidden');
@@ -222,26 +224,33 @@ class UserView {
       e.preventDefault();
       const target = e.target as HTMLElement;
       if (target.classList.contains('action-delete')) {
-        localStorage.setItem(
-          'maxId',
-          (parseInt(localStorage.getItem('maxId') || '0') - 1).toString()
-        );
-        const maxId = localStorage.getItem('maxId');
-        if (maxId === '0') {
-          this.tableUser
-            .querySelector('.empty-table')
-            .classList.remove('hidden');
-        }
+        this.confirmation.classList.remove('hidden');
+        this.overlay.classList.remove('hidden');
         const userId = target.getAttribute('data-id');
-        const row = target.closest('tr');
-        localStorage.removeItem(`email ${userId}`);
-        handle(userId);
-        row?.remove();
-        toastMessage(
-          this.toast,
-          MESSAGE_SUCCESS.DELETE_SUCCESS,
-          'toast__success'
-        );
+
+        this.bindConfirmation().then((confirmation) => {
+          if (confirmation) {
+            const row = target.closest('tr');
+            localStorage.removeItem(`email ${userId}`);
+            handle(userId);
+            row?.remove();
+            toastMessage(
+              this.toast,
+              MESSAGE_SUCCESS.DELETE_SUCCESS,
+              'toast__success'
+            );
+            localStorage.setItem(
+              'maxId',
+              (parseInt(localStorage.getItem('maxId') || '0') - 1).toString()
+            );
+            const maxId = localStorage.getItem('maxId');
+            if (maxId === '0') {
+              this.tableUser
+                .querySelector('.empty-table')
+                .classList.remove('hidden');
+            }
+          }
+        });
       }
     });
   };
@@ -287,6 +296,39 @@ class UserView {
       }
     }
   };
+
+  /**
+   * Binds confirmation functionality to the confirmation dialog.
+   * Resolves a promise with a boolean value indicating whether the action is confirmed or canceled.
+   * @returns A promise that resolves to a boolean value.
+   */
+  bindConfirmation = async (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      this.confirmation.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = e.target as HTMLElement;
+        if (target.classList.contains('btn__confirmation--remove')) {
+          this.hideConfirmation();
+          resolve(true);
+        } else if (target.classList.contains('btn__confirmation--neutral')) {
+          this.hideConfirmation();
+          resolve(false);
+        }
+      });
+    });
+  };
+
+  /**
+   * Hides the confirmation dialog and overlay.
+   */
+  hideConfirmation(): void {
+    if (!this.confirmation.classList.contains('hidden')) {
+      this.confirmation.classList.add('hidden');
+    }
+    if (!this.overlay.classList.contains('hidden')) {
+      this.overlay.classList.add('hidden');
+    }
+  }
 
   /**
    * Binds an event to display all users.

@@ -20,10 +20,6 @@
   }
 }
 
-.hidden {
-  display: none;
-}
-
 .form-group {
   text-align: left;
   font-family: $font-manager;
@@ -62,7 +58,7 @@
 }
 
 .form-update {
-  background-color: bisque;
+  background-color: $bg-form;
   & > label {
     margin-bottom: toRem(5px);
   }

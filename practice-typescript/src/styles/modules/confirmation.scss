@@ -1,0 +1,42 @@
+.confirmation {
+  display: flex;
+  left: 50%;
+  top: 50%;
+  flex-wrap: wrap;
+  align-items: center;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  height: toRem(250px);
+  max-width: 50%;
+  width: 600px;
+  font-family: $font-manager;
+  padding: toRem(30px);
+  z-index: 9999;
+  font-size: toRem(23.01px);
+  background-color: $bg-form;
+
+  &__title {
+    font-weight: 700;
+    font-size: toRem(40px);
+    font-weight: 700;
+    margin: 0 auto;
+  }
+
+  &__desc {
+    width: 100%;
+    text-align: center;
+    color: $color-login;
+    color: $color-text-primary;
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: toRem(15px);
+  }
+
+  &--hidden {
+    display: none;
+  }
+}
