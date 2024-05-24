@@ -49,3 +49,27 @@
     cursor: pointer;
   }
 }
+
+
+.btn-confirmation {
+  padding: 10px 30px;
+  width: 123px;
+  border: 1.34px;
+  border-radius: 8px;
+
+  &--delete {
+    background-color: $product-color;
+
+    &:hover {
+      background-color: $color-active-secondary;
+    }
+  }
+
+  &--cancel {
+    background-color: $color-primary-manager;
+
+    &:hover {
+      background-color: $color-title-manager;
+    }
+  }
+}
