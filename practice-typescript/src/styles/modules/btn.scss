@@ -51,10 +51,10 @@
 }
 
 .btn-confirmation {
-  padding: 10px 30px;
-  border: 1.34px;
-  border-radius: 8px;
-  font-size: 23px;
+  padding: toRem(15px);
+  border: toRem(1.34px);
+  border-radius: toRem(8px);
+  font-size: toRem(23px);
   font-family: $font-manager;
 
   &--delete {
