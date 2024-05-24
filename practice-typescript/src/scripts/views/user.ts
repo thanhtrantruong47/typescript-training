@@ -224,7 +224,7 @@ class UserView {
       e.preventDefault();
       const target = e.target as HTMLElement;
       if (target.classList.contains('action-delete')) {
-        this.confirmation.classList.remove('confirmation__hidden');
+        this.confirmation.classList.remove('confirmation--hidden');
         this.overlay.classList.remove('hidden');
         const userId = target.getAttribute('data-id');
 
@@ -322,8 +322,8 @@ class UserView {
    * Hides the confirmation dialog and overlay.
    */
   hideConfirmation(): void {
-    if (!this.confirmation.classList.contains('confirmation__hidden')) {
-      this.confirmation.classList.add('confirmation__hidden');
+    if (!this.confirmation.classList.contains('confirmation--hidden')) {
+      this.confirmation.classList.add('confirmation--hidden');
     }
     if (!this.overlay.classList.contains('hidden')) {
       this.overlay.classList.add('hidden');
